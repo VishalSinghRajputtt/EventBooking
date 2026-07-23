@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>Friendship Forever 4.0 Reloaded · Booking</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary: #f47721;
+            --primary-dark: #e06512;
+            --secondary: #d82ec6;
+            --tertiary: #9b10b5;
+            --royal-gold: #dfa04c;
+            --gradient-main: linear-gradient(195deg, #dd936b, #ab39ac);
+            --gradient-glow: linear-gradient(135deg, #f47721 0%, #d82ec6 60%, #9b10b5 100%);
+            --bg-body: #f5e8df;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --gold-border: rgba(223, 160, 76, 0.35);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --shadow-sm: 0 8px 28px rgba(155, 16, 181, 0.08);
+            --shadow-hover: 0 20px 40px rgba(155, 16, 181, 0.18);
+            --radius-card: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            padding-bottom: 48px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-royal {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .back-link:hover { color: var(--tertiary); transform: translateX(-3px); }
+
+        .container-custom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px 24px 0;
+        }
+
+        /* GLASS CARD */
+        .glass-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-sm);
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: 0.3s;
+        }
+        .glass-box:hover { box-shadow: var(--shadow-hover); }
+
+        /* TITLE BAR */
+        .event-main-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .event-main-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .action-icon-btn {
+            background: #fff;
+            border: 1px solid var(--gold-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tertiary);
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .action-icon-btn:hover {
+            background: var(--gradient-main);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* COVER IMAGE & GALLERY */
+        .cover-image-container {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            aspect-ratio: 3/4;
+            max-height: 460px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            position: relative;
+        }
+        .cover-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .cover-image-container:hover img {
+            transform: scale(1.03);
+        }
+        .zoom-overlay-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .photo-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .gallery-thumb {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .gallery-thumb.active, .gallery-thumb:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(216, 46, 198, 0.25);
+        }
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .quick-action-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #fff;
+            padding: 12px 18px;
+            border-radius: 60px;
+            border: 1px solid var(--glass-border);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 14px;
+        }
+        .quick-action-item {
+            color: var(--tertiary);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .quick-action-item:hover { color: var(--primary); }
+
+        /* INFO PILLS */
+        .info-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        .info-pill {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(244, 119, 33, 0.25);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-pill i { color: var(--primary); }
+
+        /* VENUE & ORGANIZER */
+        .venue-location-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-left: 4px solid var(--secondary);
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        .venue-name {
+            font-weight: 800;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+        .venue-address {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .location-link {
+            color: var(--tertiary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .location-link:hover { text-decoration: underline; }
+
+        .organizer-card {
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .organizer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-glow);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .organizer-name {
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+        .organizer-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* DETAILS & NOTES */
+        .detail-group-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 20px 0 10px;
+            border-bottom: 1px dashed var(--gold-border);
+            padding-bottom: 4px;
+        }
+
+        .meta-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .meta-list li {
+            padding: 6px 0;
+            font-size: 0.92rem;
+            display: flex;
+            border-bottom: 1px dotted rgba(0, 0, 0, 0.05);
+        }
+        .meta-list li strong {
+            width: 130px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .event-description-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 16px;
+        }
+
+        .notes-trigger-btn {
+            background: rgba(244, 119, 33, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary-dark);
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 10px;
+        }
+        .notes-trigger-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* BOOKING CARD */
+        .booking-card {
+            background: transparent;
+            border: none;
+            padding: 0;
+            position: sticky;
+            top: 90px;
+        }
+
+        .arrange-map-link {
+            background: transparent;
+            border: none;
+            color: var(--tertiary);
+            padding: 0;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: 0.2s;
+            margin-bottom: 20px;
+        }
+        .arrange-map-link:hover { color: var(--primary); }
+
+        .booking-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 4px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .booking-tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .booking-tab-btn.active {
+            background: var(--gradient-main);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(216, 46, 198, 0.2);
+        }
+
+        .tier-selection-grid {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .tier-card-option {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 10px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tier-card-option:hover { border-color: var(--secondary); }
+        .tier-card-option.active {
+            border-color: var(--secondary);
+            background: rgba(216, 46, 198, 0.08);
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+        .tier-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .tier-price {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .seat-pills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+        .seat-pill {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .seat-pill:hover { border-color: var(--tertiary); }
+        .seat-pill.selected {
+            background: var(--tertiary);
+            color: #fff;
+            border-color: var(--tertiary);
+        }
+
+        .qty-picker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+        }
+        .qty-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .qty-btn:hover { background: var(--tertiary); color: #fff; border-color: var(--tertiary); }
+
+        .btn-book-now {
+            width: 100%;
+            background: var(--gradient-glow);
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(216, 46, 198, 0.3);
+            transition: 0.25s;
+            text-transform: uppercase;
+        }
+        .btn-book-now:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(216, 46, 198, 0.45);
+        }
+
+        .trust-badges-box {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .badge-item i { font-size: 1.1rem; color: var(--primary); }
+
+        /* GLASS MODALS */
+        .glass-modal .modal-content {
+            background: #f5e8df;
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            color: #000000;
+            border: 1px solid var(--glass-border);
+        }
+
+        .notes-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .notes-list li {
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #334155;
+        }
+        .notes-list li i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        /* LIGHTBOX GALLERY OVERLAY - MATCHING BODY BG (#f5e8df) */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(245, 232, 223, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-topbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+            z-index: 10;
+        }
+
+        .lightbox-counter {
+            font-size: 0.92rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .lightbox-toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lb-btn {
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            color: var(--tertiary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .lb-btn:hover {
+            background: var(--gradient-glow);
+            color: #fff;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+
+        .lightbox-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex: 1;
+            margin: 15px 0;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(155, 16, 181, 0.15);
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            user-select: none;
+            border: 1px solid var(--glass-border);
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            color: var(--tertiary);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.25s;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .lightbox-nav-btn:hover {
+            background: var(--gradient-glow);
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .lb-prev { left: 20px; }
+        .lb-next { right: 20px; }
+
+        /* RESPONSIVE LAYOUT ORDER */
+        .order-box-1 { order: 1; }
+        .order-box-2 { order: 2; }
+        .order-box-3 { order: 3; }
+
+        @media (max-width: 991px) {
+            .order-box-1 { order: 1 !important; }
+            .order-box-3 { order: 2 !important; }
+            .order-box-2 { order: 3 !important; }
+            
+            .event-main-title { font-size: 1.75rem; }
+            .booking-card { 
+                position: relative;
+                top: 0;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+            .cover-image-container { max-height: 340px; }
+            .lb-prev { left: 10px; width: 44px; height: 44px; font-size: 1.1rem; }
+            .lb-next { right: 10px; width: 44px; height: 44px; font-size: 1.1rem; }
+        }
+
+        @media (max-width: 576px) {
+            .event-main-title { font-size: 1.3rem; }
+            .glass-box { padding: 18px; }
+            .tier-selection-grid { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><i class="fas fa-ticket-alt"></i> TicketHub</a>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Events</a>
+        </div>
+    </header>
+
+    <div class="container-custom">
+        
+        <!-- TITLE BAR -->
+        <div class="event-main-title-bar">
+            <h1 class="event-main-title">Friendship Forever 4.0 Reloaded</h1>
+            <button class="action-icon-btn" title="Share Event"><i class="fas fa-share-alt"></i></button>
+        </div>
+
+        <div class="row g-4">
+            
+            <!-- COLUMN 1: Cover + Photo Gallery + Quick Actions -->
+            <div class="col-12 col-lg-4 order-box-1">
+                <div class="box-1-wrapper">
+                    <div class="cover-image-container" onclick="openLightbox(0)">
+                        <img id="mainCoverImage" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" alt="Friendship Forever 4.0 Cover" />
+                        <div class="zoom-overlay-badge"><i class="fas fa-search-plus"></i> Click to Zoom</div>
+                    </div>
+
+                    <div class="photo-gallery-grid">
+                        <div class="gallery-thumb active" onclick="openLightbox(0)">
+                            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=200&q=80" alt="Thumb 1" />
+                        </div>
+                        <div class="gallery-thumb" onclick="openLightbox(1)">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=200&q=80" alt="Thumb 2" />
+                        </div>
+                        <div class="gallery-thumb" onclick="openLightbox(2)">
+                            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=200&q=80" alt="Thumb 3" />
+                        </div>
+                        <div class="gallery-thumb" onclick="openLightbox(3)">
+                            <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=200&q=80" alt="Thumb 4" />
+                        </div>
+                    </div>
+
+                    <div class="quick-action-bar">
+                        <span class="quick-action-item" onclick="openLightbox(0)"><i class="fas fa-image"></i> 4 Photos</span>
+                        <span style="color:#cbd5e1">|</span>
+                        <span class="quick-action-item"><i class="fas fa-star"></i> Review</span>
+                        <span style="color:#cbd5e1">|</span>
+                        <span class="quick-action-item"><i class="fas fa-share-node"></i> Share</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: Event Details -->
+            <div class="col-12 col-lg-5 order-box-2">
+                <div class="glass-box">
+                    
+                    <div class="info-pill-row">
+                        <div class="info-pill"><i class="far fa-calendar-alt"></i> 02 Aug 2026</div>
+                        <div class="info-pill"><i class="far fa-clock"></i> 07:59 PM</div>
+                        <div class="info-pill"><i class="fas fa-hourglass-half"></i> 5 Hours</div>
+                    </div>
+
+                    <div class="venue-location-box">
+                        <div class="venue-name"><i class="fas fa-map-marker-alt text-danger me-1"></i> Rainbow Club Resort</div>
+                        <div class="venue-address">Magdalla circle Dumas Road, Sachin highway, near City plus cinema, Magdalla, Surat, Gujarat 395007</div>
+                        <a href="https://maps.google.com" target="_blank" class="location-link"><i class="fas fa-directions"></i> Get Directions (Location Link)</a>
+                    </div>
+
+                    <label class="form-label fw-bold text-muted small mb-1">ORGANIZED BY</label>
+                    <div class="organizer-card">
+                        <div class="organizer-avatar">R</div>
+                        <div>
+                            <div class="organizer-name">Roongta Cinema <i class="fas fa-check-circle text-primary ms-1" title="Verified Organizer"></i></div>
+                            <div class="organizer-tag">Official Venue & Event Partner</div>
+                        </div>
+                    </div>
+
+                    <h3 class="detail-group-title">Event Overview</h3>
+                    <ul class="meta-list">
+                        <li><strong>Place:</strong> Tata Hall, Navsari</li>
+                        <li><strong>Timings:</strong> 9.15 PM to 12.00 PM</li>
+                        <li><strong>Category:</strong> Comedy / Festival</li>
+                        <li><strong>Duration:</strong> 2.30 Hrs</li>
+                        <li><strong>Age Limit:</strong> 12+ Years</li>
+                        <li><strong>Language:</strong> Gujarati</li>
+                    </ul>
+
+                    <h3 class="detail-group-title">Description</h3>
+                    <p class="event-description-text">
+                        This is more than just a Friendship Day party. It is a complete festival experience created for friends, music lovers, and celebration seekers.
+                    </p>
+                    <p class="event-description-text">
+                        <strong>WHAT TO EXPECT:</strong><br/>
+                        • Heaven and Ancient Egypt themed festival.<br/>
+                        • Premium Mumbai style clubbing experience.<br/>
+                        • Live performances, laser shows & unlimited memories.
+                    </p>
+
+                    <button type="button" class="notes-trigger-btn" data-bs-toggle="modal" data-bs-target="#eventNotesModal">
+                        <span><i class="fas fa-exclamation-circle me-2"></i> Read Important Guidelines & Notes</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- COLUMN 3: Booking Card -->
+            <div class="col-12 col-lg-3 order-box-3">
+                <div class="booking-card">
+                    
+                    <button type="button" class="arrange-map-link font-royal" data-bs-toggle="modal" data-bs-target="#seatingMapModal">
+                        <i class="fas fa-map-marked-alt"></i> Sitting Arrangement Map
+                    </button>
+
+                    <div class="booking-tabs">
+                        <button class="booking-tab-btn active" id="tabSeatMode" onclick="switchBookingMode('seat')">Seat-Wise</button>
+                        <button class="booking-tab-btn" id="tabDirectMode" onclick="switchBookingMode('direct')">Direct Pass</button>
+                    </div>
+
+                    <div id="seatSelectionPanel">
+                        <label class="form-label fw-bold text-muted small">SELECT TIER CATEGORY</label>
+                        <div class="tier-selection-grid">
+                            <div class="tier-card-option active" onclick="selectTier(this, 'Platinum', 300)">
+                                <div class="tier-name">Platinum</div>
+                                <div class="tier-price">₹300</div>
+                            </div>
+                            <div class="tier-card-option" onclick="selectTier(this, 'Royal', 250)">
+                                <div class="tier-name">Royal</div>
+                                <div class="tier-price">₹250</div>
+                            </div>
+                            <div class="tier-card-option" onclick="selectTier(this, 'Marvel', 200)">
+                                <div class="tier-name">Marvel</div>
+                                <div class="tier-price">₹200</div>
+                            </div>
+                        </div>
+
+                        <label class="form-label fw-bold text-muted small">AVAILABLE SEATS</label>
+                        <div class="seat-pills-wrapper" id="seatContainer">
+                            <span class="seat-pill" onclick="toggleSeat(this)">B1</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">B2</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">B3</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C2</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C3</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C4</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C5</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C6</span>
+                        </div>
+                    </div>
+
+                    <div id="directSelectionPanel" style="display: none;">
+                        <label class="form-label fw-bold text-muted small">SELECT PASS TYPE</label>
+                        <select class="form-select mb-3" style="border-radius:12px;" id="directTierSelect" onchange="updateDirectPrice()">
+                            <option value="300">Platinum Pass - ₹300</option>
+                            <option value="250">Royal Pass - ₹250</option>
+                            <option value="200">Marvel Pass - ₹200</option>
+                        </select>
+
+                        <label class="form-label fw-bold text-muted small">QUANTITY</label>
+                        <div class="qty-picker">
+                            <button class="qty-btn" onclick="adjustQty(-1)">-</button>
+                            <span class="fw-bold fs-5" id="ticketQty">1</span>
+                            <button class="qty-btn" onclick="adjustQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted fw-semibold">Total Price:</span>
+                        <span class="fs-4 fw-bold text-dark" id="displayTotal">₹300</span>
+                    </div>
+
+                    <button class="btn-book-now font-royal">Book Now</button>
+
+                    <div class="trust-badges-box">
+                        <div class="badge-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Checkout</span>
+                        </div>
+                        <div class="badge-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>Instant Ticket</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SEATING MAP MODAL -->
+    <div class="modal fade glass-modal" id="seatingMapModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4">
+                    <h5 class="modal-title font-royal fw-bold text-warning"><i class="fas fa-map-marked-alt me-2"></i> Venue Seating Map</h5>
+                    <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3 text-center">
+                    <div class="map-image-wrapper p-2 rounded-4" style="background: rgba(255, 255, 255, 0.4); border: 1px solid var(--glass-border); overflow: hidden;">
+                        <img src="seating.png" alt="Venue Seating Map" class="img-fluid rounded-3 shadow-lg" style="max-height: 75vh; object-fit: contain; width: 100%; cursor: pointer;" onclick="openCustomMapZoom('seating.png')" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENT NOTES MODAL -->
+    <div class="modal fade glass-modal" id="eventNotesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom border-secondary border-opacity-25 px-4">
+                    <h5 class="modal-title font-royal fw-bold text-warning"><i class="fas fa-clipboard-list me-2"></i> Important Event Notes</h5>
+                    <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul class="notes-list">
+                        <li><i class="fas fa-clock"></i> <strong>Reporting Time:</strong> 6:30 AM</li>
+                        <li><i class="fas fa-play-circle"></i> <strong>Session Starts:</strong> 7:00 AM Sharp</li>
+                        <li><i class="fas fa-building"></i> <strong>Venue:</strong> Roongta Cinemas</li>
+                        <li><i class="fas fa-glass-cheers"></i> Complimentary Healthy Welcome Shot included.</li>
+                        <li><i class="fas fa-tshirt"></i> Please wear comfortable yoga/stretchable attire.</li>
+                        <li><i class="fas fa-mat"></i> Bring your own yoga mat (unless otherwise specified by the organizer).</li>
+                        <li><i class="fas fa-wine-bottle"></i> Carry a water bottle to stay hydrated.</li>
+                        <li><i class="fas fa-qrcode"></i> Entry will be permitted only with a valid ticket/QR code.</li>
+                        <li><i class="fas fa-camera"></i> Photography and videography may take place during the event. Attendance implies consent to appear in promotional content.</li>
+                        <li><i class="fas fa-parking"></i> Parking is subject to venue availability.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN LIGHTBOX MODAL WITH MATCHING BG (#f5e8df) -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <div class="lightbox-topbar">
+            <div class="lightbox-counter" id="lbCounter">1 / 4</div>
+            <div class="lightbox-toolbar">
+                <button class="lb-btn" onclick="zoomIn()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                <button class="lb-btn" onclick="zoomOut()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+                <button class="lb-btn" onclick="resetZoom()" title="Reset Zoom"><i class="fas fa-compress-arrows-alt"></i></button>
+                <button class="lb-btn" onclick="closeLightbox()" title="Close (Esc)"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="lightbox-stage">
+            <button class="lightbox-nav-btn lb-prev" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Lightbox Image" />
+            <button class="lightbox-nav-btn lb-next" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let currentPrice = 300;
+        let selectedSeatsCount = 0;
+        let quantity = 1;
+        let bookingMode = 'seat';
+
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80",
+            "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&q=80",
+            "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&q=80",
+            "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&q=80"
+        ];
+
+        let currentImageIndex = 0;
+        let zoomLevel = 1;
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            zoomLevel = 1;
+            updateLightbox();
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openCustomMapZoom(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lbCounter').innerText = 'Seating Map';
+            zoomLevel = 1;
+            applyZoom();
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            zoomLevel = 1;
+            updateLightbox();
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            zoomLevel = 1;
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            const img = document.getElementById('lightboxImg');
+            img.src = galleryImages[currentImageIndex];
+            document.getElementById('lbCounter').innerText = `${currentImageIndex + 1} / ${galleryImages.length}`;
+            applyZoom();
+
+            document.getElementById('mainCoverImage').src = galleryImages[currentImageIndex];
+            document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === currentImageIndex);
+            });
+        }
+
+        function zoomIn() {
+            if (zoomLevel < 3) {
+                zoomLevel += 0.3;
+                applyZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (zoomLevel > 0.6) {
+                zoomLevel -= 0.3;
+                applyZoom();
+            }
+        }
+
+        function resetZoom() {
+            zoomLevel = 1;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            const img = document.getElementById('lightboxImg');
+            img.style.transform = `scale(${zoomLevel})`;
+        }
+
+        document.getElementById('lightboxOverlay').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) zoomIn();
+            else zoomOut();
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e) {
+            const lb = document.getElementById('lightboxOverlay');
+            if (lb.classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        function switchBookingMode(mode) {
+            bookingMode = mode;
+            document.getElementById('tabSeatMode').classList.toggle('active', mode === 'seat');
+            document.getElementById('tabDirectMode').classList.toggle('active', mode === 'direct');
+            
+            document.getElementById('seatSelectionPanel').style.display = mode === 'seat' ? 'block' : 'none';
+            document.getElementById('directSelectionPanel').style.display = mode === 'direct' ? 'block' : 'none';
+            
+            calculateTotal();
+        }
+
+        function selectTier(element, name, price) {
+            document.querySelectorAll('.tier-card-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            currentPrice = price;
+            calculateTotal();
+        }
+
+        function toggleSeat(element) {
+            element.classList.toggle('selected');
+            selectedSeatsCount = document.querySelectorAll('.seat-pill.selected').length;
+            calculateTotal();
+        }
+
+        function adjustQty(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('ticketQty').innerText = quantity;
+            calculateTotal();
+        }
+
+        function updateDirectPrice() {
+            currentPrice = parseInt(document.getElementById('directTierSelect').value);
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            if (bookingMode === 'seat') {
+                total = selectedSeatsCount > 0 ? selectedSeatsCount * currentPrice : currentPrice;
+            } else {
+                total = quantity * currentPrice;
+            }
+            document.getElementById('displayTotal').innerText = '₹' + total;
+        }
+
+        calculateTotal();
+    </script>
+</body>
+
+</html>
