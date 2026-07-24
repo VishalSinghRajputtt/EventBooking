@@ -58,6 +58,7 @@
       pointer-events: none;
     }
 
+    /* HEADER */
     .header {
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(16px);
@@ -162,6 +163,7 @@
       transform: scale(1.05);
     }
 
+    /* SIDENAV */
     .sidenav {
       height: 100%;
       width: 0;
@@ -253,6 +255,7 @@
       padding: 16px 16px 0;
     }
 
+    /* HERO SLIDER — SMALLER HEIGHT */
     .slider-section {
       position: relative;
       width: 100%;
@@ -261,7 +264,7 @@
       margin-bottom: 24px;
       box-shadow: 0 12px 30px rgba(155, 16, 181, 0.1);
       background: #0b0e1a;
-      height: 180px;
+      height: 140px; /* reduced from 180px */
     }
 
     .slider-wrapper {
@@ -293,9 +296,9 @@
 
     .slide-content {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
+      bottom: 14px;
+      left: 16px;
+      right: 16px;
       z-index: 4;
       color: #fff;
     }
@@ -304,26 +307,26 @@
       display: inline-block;
       background: var(--gradient-main);
       color: white;
-      padding: 3px 12px;
+      padding: 2px 10px;
       border-radius: 40px;
-      font-size: 0.65rem;
+      font-size: 0.55rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-
-    .slide-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      line-height: 1.2;
       margin-bottom: 4px;
     }
 
+    .slide-title {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
     .slide-desc {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       opacity: 0.9;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
@@ -333,10 +336,10 @@
     .btn-book {
       background: var(--gradient-main);
       border: none;
-      padding: 8px 22px;
+      padding: 5px 16px;
       border-radius: 40px;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: white;
       cursor: pointer;
       transition: 0.25s;
@@ -351,16 +354,16 @@
 
     .slider-dots {
       position: absolute;
-      bottom: 12px;
-      right: 20px;
+      bottom: 8px;
+      right: 14px;
       display: flex;
-      gap: 6px;
+      gap: 5px;
       z-index: 10;
     }
 
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background: rgba(255, 255, 255, 0.4);
       border-radius: 20px;
       cursor: pointer;
@@ -369,9 +372,10 @@
 
     .dot.active {
       background: var(--primary);
-      width: 22px;
+      width: 16px;
     }
 
+    /* FILTER CHIPS */
     .filter-container {
       display: flex;
       gap: 8px;
@@ -412,6 +416,7 @@
       transform: translateY(-1px);
     }
 
+    /* SECTION TITLES */
     .category-header {
       display: flex;
       align-items: center;
@@ -452,6 +457,7 @@
       color: var(--secondary);
     }
 
+    /* NEW CARD DESIGN — IMAGE ON TOP, GRADIENT BOTTOM */
     .event-card-item {
       display: flex;
       flex-direction: column;
@@ -613,6 +619,7 @@
       transform: scale(1.1);
     }
 
+    /* UPCOMING EVENTS HORIZONTAL SLIDER — LARGER CARDS */
     .event-slider-section {
       position: relative;
       margin: 8px 0 20px;
@@ -633,12 +640,12 @@
 
     .event-slider-track {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       width: max-content;
     }
 
     .event-slider-track .event-card-item {
-      width: 200px;
+      width: 240px; /* larger than before */
       flex-shrink: 0;
     }
 
@@ -678,12 +685,22 @@
     .slider-nav-left { left: -6px; }
     .slider-nav-right { right: -6px; }
 
+    /* MOBILE FIRST */
     @media (max-width: 575.98px) {
       .container-custom { padding: 12px 12px 0; }
-      .slider-section { height: 160px; }
-      .event-slider-track .event-card-item { width: 165px; }
-      .card-poster-area { aspect-ratio: 2.5 / 2.5; }
+      .slider-section { height: 120px; } /* even smaller on mobile */
+      .slide-title { font-size: 0.9rem; }
+      .slide-desc { font-size: 0.6rem; }
+      .btn-book { padding: 4px 12px; font-size: 0.6rem; }
+      
+      /* upcoming cards larger on mobile */
+      .event-slider-track .event-card-item { width: 200px; }
+      .card-poster-area { aspect-ratio: 3 / 3.8; }
       .slider-nav-btn { width: 30px; height: 30px; }
+    }
+
+    @media (min-width: 576px) {
+      .slider-section { height: 160px; }
     }
 
     @media (min-width: 768px) {
@@ -691,21 +708,24 @@
       .logo { font-size: 1.8rem; }
       .search-bar { width: 280px; }
       .search-bar:focus { width: 320px; }
-      .slider-section { height: 350px; }
-      .slide-title { font-size: 2.2rem; }
-      .slide-desc { font-size: 0.95rem; -webkit-line-clamp: 2; }
-      .event-slider-track .event-card-item { width: 240px; }
+      .slider-section { height: 200px; }
+      .slide-title { font-size: 1.5rem; }
+      .slide-desc { font-size: 0.8rem; -webkit-line-clamp: 2; }
+      .event-slider-track .event-card-item { width: 260px; }
       .slider-nav-btn { width: 38px; height: 38px; }
     }
 
     @media (min-width: 992px) {
-      .event-slider-track .event-card-item { width: 260px; }
+      .slider-section { height: 240px; }
+      .slide-title { font-size: 1.8rem; }
+      .event-slider-track .event-card-item { width: 280px; }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- SIDENAV -->
   <div class="sidenav-overlay" id="sidenavOverlay" onclick="closeSidenav()"></div>
   <div class="sidenav" id="sidenav">
     <button class="close-btn" onclick="closeSidenav()"><i class="fas fa-times"></i></button>
@@ -717,6 +737,7 @@
     <a href="details.html"><i class="fas fa-user-circle"></i> Profile</a>
   </div>
 
+  <!-- HEADER -->
   <header class="header">
     <div class="nav-container">
       <a href="details.html" class="logo"><i class="fas fa-ticket-alt"></i>Netlink</a>
@@ -730,8 +751,10 @@
     </div>
   </header>
 
+  <!-- MAIN CONTAINER -->
   <div class="container-custom">
 
+    <!-- HERO BANNER — SMALLER HEIGHT -->
     <div class="slider-section">
       <div class="slider-wrapper" id="sliderWrapper">
         <div class="slide">
@@ -772,6 +795,7 @@
       </div>
     </div>
 
+    <!-- CATEGORY CHIPS -->
     <div class="filter-container" id="filterContainer">
       <div class="chip active" data-filter="all"><i class="fas fa-fire me-1"></i> All</div>
       <div class="chip" data-filter="movies"><i class="fas fa-film me-1"></i> Movies</div>
@@ -781,6 +805,7 @@
       <div class="chip" data-filter="arts"><i class="fas fa-paint-brush me-1"></i> Arts</div>
     </div>
 
+    <!-- RECOMMENDED GRID — NEW CARD DESIGN -->
     <section>
       <div class="category-header">
         <h2 class="category-title"><i class="fas fa-star"></i> Recommended</h2>
@@ -789,7 +814,8 @@
       
       <div class="row g-3 g-md-4" id="recommendedGrid">
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
+        <!-- Card 1 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Dil Dosti Dance" />
@@ -813,7 +839,8 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="comedy">
+        <!-- Card 2 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="comedy">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Hulaboo" />
@@ -836,7 +863,8 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
+        <!-- Card 3 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" alt="Homeland" />
@@ -860,7 +888,8 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="sports">
+        <!-- Card 4 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="sports">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&q=80" alt="7 Avatars" />
@@ -883,7 +912,8 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
+        <!-- Card 5 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Jan Neta" />
@@ -907,7 +937,8 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
+        <!-- Card 6 -->
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
           <a href="details.html" class="event-card-item">
             <div class="card-poster-area">
               <img class="card-poster-bg" src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80" alt="Dhamaal 4" />
@@ -934,6 +965,7 @@
       </div>
     </section>
 
+    <!-- UPCOMING EVENTS SLIDER — LARGER CARDS -->
     <section class="mt-4">
       <div class="category-header">
         <h2 class="category-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
@@ -947,6 +979,7 @@
         <div class="event-slider-wrapper" id="eventSliderWrapper">
           <div class="event-slider-track" id="eventTrack">
 
+            <!-- Slide 1 -->
             <a href="details.html" class="event-card-item">
               <div class="card-poster-area">
                 <img class="card-poster-bg" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Sunburn" />
@@ -966,6 +999,7 @@
               </div>
             </a>
 
+            <!-- Slide 2 -->
             <a href="details.html" class="event-card-item">
               <div class="card-poster-area">
                 <img class="card-poster-bg" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Avengers" />
@@ -985,6 +1019,7 @@
               </div>
             </a>
 
+            <!-- Slide 3 -->
             <a href="details.html" class="event-card-item">
               <div class="card-poster-area">
                 <img class="card-poster-bg" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Comedy" />
@@ -1003,6 +1038,7 @@
               </div>
             </a>
 
+            <!-- Slide 4 -->
             <a href="details.html" class="event-card-item">
               <div class="card-poster-area">
                 <img class="card-poster-bg" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" alt="Echoes" />
@@ -1021,6 +1057,7 @@
               </div>
             </a>
 
+            <!-- Slide 5 -->
             <a href="details.html" class="event-card-item">
               <div class="card-poster-area">
                 <img class="card-poster-bg" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500&q=80" alt="NH7" />
@@ -1047,8 +1084,10 @@
 
   </div>
 
+  <!-- JAVASCRIPT -->
   <script>
     (function() {
+      // CHIP FILTER
       document.querySelectorAll('.chip').forEach(chip => {
         chip.addEventListener('click', function () {
           document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -1061,6 +1100,7 @@
         });
       });
 
+      // SIDENAV
       window.openSidenav = function() {
         document.getElementById('sidenav').classList.add('open');
         document.getElementById('sidenavOverlay').classList.add('show');
@@ -1072,6 +1112,7 @@
         document.body.style.overflow = '';
       };
 
+      // HERO SLIDER
       let current = 0, total = 3;
       const wrapper = document.getElementById('sliderWrapper');
       const dots = document.querySelectorAll('.dot');
@@ -1104,6 +1145,7 @@
         updateSlider();
       }, 4000);
 
+      // EVENT SLIDER SCROLL & BUTTON VISIBILITY
       const sliderWrapperEl = document.getElementById('eventSliderWrapper');
       const track = document.getElementById('eventTrack');
       const leftBtn = document.getElementById('eventScrollLeft');
