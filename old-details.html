@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
     <title>Friendship Forever 4.0 Reloaded · Booking</title>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
         :root {
             --primary: #f47721;
@@ -20,8 +20,8 @@
             --gradient-main: linear-gradient(195deg, #dd936b, #ab39ac);
             --gradient-glow: linear-gradient(135deg, #f47721 0%, #d82ec6 60%, #9b10b5 100%);
             --bg-body: #f5e8df;
-            --card-bg: rgba(255, 255, 255, 0.88);
-            --glass-border: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(255, 255, 255, 0.6);
             --gold-border: rgba(223, 160, 76, 0.35);
             --text-main: #0f172a;
             --text-muted: #475569;
@@ -33,20 +33,21 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--bg-body);
             color: var(--text-main);
-            padding-bottom: 24px;
+            padding-bottom: 18px;
             -webkit-font-smoothing: antialiased;
         }
 
         .font-royal {
-            font-family: 'Cinzel', serif;
+           font-family: 'Plus Jakarta Sans', sans-serif;
             letter-spacing: 0.5px;
         }
 
+        /* HEADER */
         .header {
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--glass-border);
@@ -58,7 +59,7 @@
         .nav-container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 12px 24px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -88,213 +89,71 @@
         }
         .back-link:hover { color: var(--tertiary); transform: translateX(-3px); }
 
-       
-        .hero-details-wrapper {
-            max-width: 1380px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        .hero-details-banner {
-            position: relative;
-            width: 100%;
-            height: 420px; 
-            background: #000;
-            overflow: hidden;
-            border-radius: 28px;
-            margin-top: 20px;
-            box-shadow: 0 16px 36px rgba(155, 16, 181, 0.12);
-        }
-
-        .hero-banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-banner-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg, 
-                rgba(0,0,0,0.45) 0%, 
-                rgba(0,0,0,0.1) 35%, 
-                rgba(15, 7, 20, 0.8) 70%,
-                rgba(15, 7, 20, 0.95) 100%
-            );
-            z-index: 1;
-        }
-
-       
-        .hero-top-controls {
-            position: absolute;
-            top: 20px;
-            left: 24px;
-            right: 24px;
-            z-index: 5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hero-circle-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-
-        .hero-circle-btn:hover {
-            background: var(--gradient-glow);
-            border-color: transparent;
-            color: #ffffff;
-            transform: scale(1.08);
-        }
-
-       
-        .hero-bottom-container {
-            position: absolute;
-            bottom: 80px; 
-            left: 24px;
-            right: 24px;
-            z-index: 5;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .hero-title-block {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 16px 22px;
-            border-radius: 20px;
-            flex: 1;
-            max-width: 750px;
-            color: #ffffff;
-        }
-
-        .hero-badges-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-
-        .badge-cat {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-        }
-
-        .badge-status-hot {
-            background: var(--gradient-glow);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            box-shadow: 0 2px 10px rgba(216, 46, 198, 0.4);
-        }
-
-        .hero-event-name {
-            font-size: 1.9rem;
-            font-weight: 800;
-            margin-bottom: 0;
-            line-height: 1.15;
-            color: #ffffff;
-        }
-
-        .hero-summary-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            padding: 14px 20px;
-            border-radius: 20px;
-            color: #ffffff;
-            min-width: 210px;
-        }
-
-        .summary-label {
-            font-size: 0.82rem;
-            font-weight: 700;
-            opacity: 0.85;
-            margin-bottom: 2px;
-            display: block;
-        }
-
-        .summary-sub {
-            font-size: 0.68rem;
-            opacity: 0.7;
-            text-transform: uppercase;
-        }
-
-        .summary-price {
-            font-size: 1.7rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #ffffff;
-        }
-
-     
         .container-custom {
             max-width: 1380px;
-            margin: -60px auto 0; 
-            padding: 0 24px;
-            position: relative;
-            z-index: 10;
+            margin: 0 auto;
+            padding: 24px 24px 0;
         }
 
-    
+        /* GLASS CARD */
         .glass-box {
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-card);
-            box-shadow: 0 12px 32px rgba(155, 16, 181, 0.12);
-            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            padding: 28px;
             margin-bottom: 24px;
             transition: 0.3s;
         }
         .glass-box:hover { box-shadow: var(--shadow-hover); }
 
-        .box-1-wrapper {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-card);
-            box-shadow: 0 12px 32px rgba(155, 16, 181, 0.12);
-            padding: 16px;
+        /* TITLE BAR */
+        .event-main-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
         }
 
+        .event-main-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .action-icon-btn {
+            background: #fff;
+            border: 1px solid var(--gold-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tertiary);
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .action-icon-btn:hover {
+            background: var(--gradient-main);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* COVER IMAGE & GALLERY */
         .cover-image-container {
             width: 100%;
-            border-radius: 18px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
-            aspect-ratio: 3/3.8;
-            max-height: 380px;
+            aspect-ratio: 3/4;
+            max-height: 460px;
             border: 1px solid var(--glass-border);
             cursor: pointer;
             position: relative;
@@ -323,6 +182,7 @@
             align-items: center;
             gap: 6px;
             pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .photo-gallery-grid {
@@ -342,6 +202,7 @@
         .gallery-thumb.active, .gallery-thumb:hover {
             border-color: var(--secondary);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(216, 46, 198, 0.25);
         }
         .gallery-thumb img {
             width: 100%;
@@ -354,12 +215,12 @@
             justify-content: space-around;
             align-items: center;
             background: #fff;
-            padding: 10px 14px;
+            padding: 12px 18px;
             border-radius: 60px;
             border: 1px solid var(--glass-border);
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-top: 12px;
+            font-size: 0.9rem;
+            margin-top: 14px;
         }
         .quick-action-item {
             color: var(--tertiary);
@@ -369,7 +230,9 @@
             align-items: center;
             gap: 6px;
         }
+        .quick-action-item:hover { color: var(--primary); }
 
+        /* INFO PILLS */
         .info-pill-row {
             display: flex;
             flex-wrap: wrap;
@@ -389,6 +252,7 @@
         }
         .info-pill i { color: var(--primary); }
 
+        /* VENUE & ORGANIZER */
         .venue-location-box {
             background: rgba(255, 255, 255, 0.7);
             border-left: 4px solid var(--secondary);
@@ -412,6 +276,7 @@
             font-size: 0.85rem;
             text-decoration: none;
         }
+        .location-link:hover { text-decoration: underline; }
 
         .organizer-card {
             background: #fff;
@@ -422,6 +287,7 @@
             align-items: center;
             gap: 14px;
             margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
         .organizer-avatar {
             width: 48px;
@@ -436,9 +302,18 @@
             font-weight: 800;
             flex-shrink: 0;
         }
-        .organizer-name { font-weight: 800; font-size: 1rem; }
-        .organizer-tag { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+        .organizer-name {
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+        .organizer-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
+        /* DETAILS & NOTES */
         .detail-group-title {
             font-family: 'Cinzel', serif;
             font-size: 1.2rem;
@@ -486,10 +361,18 @@
             justify-content: space-between;
             cursor: pointer;
             transition: 0.25s;
+            margin-top: 10px;
         }
-        .notes-trigger-btn:hover { background: var(--primary); color: #fff; }
+        .notes-trigger-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
 
+        /* BOOKING CARD */
         .booking-card {
+            background: transparent;
+            border: none;
+            padding: 0;
             position: sticky;
             top: 90px;
         }
@@ -506,8 +389,11 @@
             gap: 8px;
             cursor: pointer;
             text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: 0.2s;
             margin-bottom: 20px;
         }
+        .arrange-map-link:hover { color: var(--primary); }
 
         .booking-tabs {
             display: flex;
@@ -532,6 +418,7 @@
         .booking-tab-btn.active {
             background: var(--gradient-main);
             color: #fff;
+            box-shadow: 0 4px 12px rgba(216, 46, 198, 0.2);
         }
 
         .tier-selection-grid {
@@ -547,14 +434,24 @@
             padding: 10px 4px;
             text-align: center;
             cursor: pointer;
+            transition: 0.2s;
         }
+        .tier-card-option:hover { border-color: var(--secondary); }
         .tier-card-option.active {
             border-color: var(--secondary);
             background: rgba(216, 46, 198, 0.08);
             box-shadow: 0 0 0 2px var(--secondary);
         }
-        .tier-name { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
-        .tier-price { font-size: 1rem; font-weight: 800; }
+        .tier-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .tier-price {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
 
         .seat-pills-wrapper {
             display: flex;
@@ -570,7 +467,9 @@
             font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
+        .seat-pill:hover { border-color: var(--tertiary); }
         .seat-pill.selected {
             background: var(--tertiary);
             color: #fff;
@@ -595,7 +494,9 @@
             border-radius: 50%;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
+        .qty-btn:hover { background: var(--tertiary); color: #fff; border-color: var(--tertiary); }
 
         .btn-book-now {
             width: 100%;
@@ -608,7 +509,12 @@
             font-size: 1.05rem;
             cursor: pointer;
             box-shadow: 0 10px 25px rgba(216, 46, 198, 0.3);
+            transition: 0.25s;
             text-transform: uppercase;
+        }
+        .btn-book-now:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(216, 46, 198, 0.45);
         }
 
         .trust-badges-box {
@@ -659,60 +565,155 @@
             margin-top: 3px;
         }
 
-
+        /* LIGHTBOX GALLERY OVERLAY - MATCHING BODY BG (#f5e8df) */
         .lightbox-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(245, 232, 223, 0.95);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(245, 232, 223, 0.92);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 9999;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .lightbox-overlay.active { display: flex; }
+        .lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
         .lightbox-topbar {
-            width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+            z-index: 10;
         }
+
         .lightbox-counter {
-            font-size: 0.92rem; font-weight: 700; background: rgba(255, 255, 255, 0.8); padding: 6px 18px; border-radius: 30px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
+
+        .lightbox-toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
         .lb-btn {
-            background: #fff; border: 1px solid var(--glass-border); color: var(--tertiary);
-            width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; cursor: pointer;
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            color: var(--tertiary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
+        .lb-btn:hover {
+            background: var(--gradient-glow);
+            color: #fff;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+
         .lightbox-stage {
-            position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex: 1;
+            margin: 15px 0;
         }
+
         .lightbox-img {
-            max-width: 90%; max-height: 80vh; object-fit: contain; border-radius: 20px;
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(155, 16, 181, 0.15);
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            user-select: none;
+            border: 1px solid var(--glass-border);
         }
+
         .lightbox-nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px;
-            border-radius: 50%; background: #fff; border: 1px solid var(--glass-border); color: var(--tertiary);
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            color: var(--tertiary);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.25s;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .lightbox-nav-btn:hover {
+            background: var(--gradient-glow);
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-50%) scale(1.1);
         }
         .lb-prev { left: 20px; }
         .lb-next { right: 20px; }
 
+        /* RESPONSIVE LAYOUT ORDER */
+        .order-box-1 { order: 1; }
+        .order-box-2 { order: 2; }
+        .order-box-3 { order: 3; }
+
         @media (max-width: 991px) {
-            .hero-details-banner { height: 320px; }
-            .hero-bottom-container { bottom: 65px; }
-            .hero-event-name { font-size: 1.5rem; }
-            .hero-summary-box { display: none; }
-            .container-custom { margin-top: -45px; padding: 0 16px; }
-            .booking-card { position: relative; top: 0; }
+            .order-box-1 { order: 1 !important; }
+            .order-box-3 { order: 2 !important; }
+            .order-box-2 { order: 3 !important; }
+            
+            .event-main-title { font-size: 1.75rem; }
+            .booking-card { 
+                position: relative;
+                top: 0;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+            .cover-image-container { max-height: 340px; }
+            .lb-prev { left: 10px; width: 44px; height: 44px; font-size: 1.1rem; }
+            .lb-next { right: 10px; width: 44px; height: 44px; font-size: 1.1rem; }
         }
 
         @media (max-width: 576px) {
-            .hero-details-wrapper { padding: 0; }
-            .hero-details-banner { height: 280px; border-radius: 0; margin-top: 0; }
-            .hero-title-block { padding: 12px; }
-            .hero-event-name { font-size: 1.2rem; }
-            .container-custom { margin-top: -35px; padding: 0 12px; }
+            .event-main-title { font-size: 1.3rem; }
+            .glass-box { padding: 18px; }
+            .tier-selection-grid { flex-direction: column; }
         }
     </style>
 </head>
@@ -727,43 +728,21 @@
         </div>
     </header>
 
-    <!-- CINEMATIC HERO COVER BANNER (WITH GAP FROM HEADER) -->
-    <div class="hero-details-wrapper">
-        <div class="hero-details-banner">
-            <img class="hero-banner-img" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1400&q=80" alt="Friendship Forever Cover" />
-            <div class="hero-banner-overlay"></div>
-
-            <!-- Top Controls -->
-            <div class="hero-top-controls">
-                <a href="index.html" class="hero-circle-btn" title="Go Back"><i class="fas fa-arrow-left"></i></a>
-                <div class="d-flex gap-2">
-                    <button class="hero-circle-btn" title="Share Event"><i class="fas fa-share-alt"></i></button>
-                    <button class="hero-circle-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button>
-                </div>
-            </div>
-
-            <!-- Bottom Left Title Block & Bottom Right Price Summary -->
-            <div class="hero-bottom-container">
-                <div class="hero-title-block">
-                    <div class="hero-badges-row">
-                        <span class="badge-cat">Music</span>
-                        <span class="badge-status-hot">HOT</span>
-                    </div>
-                    <h1 class="hero-event-name">Friendship Forever 4.0 Reloaded</h1>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <div class="container-custom">
+        
+        <!-- TITLE BAR -->
+        <div class="event-main-title-bar">
+            <h1 class="event-main-title">Friendship Forever 4.0 Reloaded</h1>
+            <button class="action-icon-btn" title="Share Event"><i class="fas fa-share-alt"></i></button>
+        </div>
 
         <div class="row g-4">
             
-            <div class="col-12 col-lg-4">
+            <!-- COLUMN 1: Cover + Photo Gallery + Quick Actions -->
+            <div class="col-12 col-lg-4 order-box-1">
                 <div class="box-1-wrapper">
                     <div class="cover-image-container" onclick="openLightbox(0)">
-                        <img id="mainCoverImage" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" alt="Cover" />
+                        <img id="mainCoverImage" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" alt="Friendship Forever 4.0 Cover" />
                         <div class="zoom-overlay-badge"><i class="fas fa-search-plus"></i> Click to Zoom</div>
                     </div>
 
@@ -793,7 +772,7 @@
             </div>
 
             <!-- COLUMN 2: Event Details -->
-            <div class="col-12 col-lg-5">
+            <div class="col-12 col-lg-5 order-box-2">
                 <div class="glass-box">
                     
                     <div class="info-pill-row">
@@ -812,7 +791,7 @@
                     <div class="organizer-card">
                         <div class="organizer-avatar">R</div>
                         <div>
-                            <div class="organizer-name">Roongta Cinema <i class="fas fa-check-circle text-primary ms-1"></i></div>
+                            <div class="organizer-name">Roongta Cinema <i class="fas fa-check-circle text-primary ms-1" title="Verified Organizer"></i></div>
                             <div class="organizer-tag">Official Venue & Event Partner</div>
                         </div>
                     </div>
@@ -831,6 +810,12 @@
                     <p class="event-description-text">
                         This is more than just a Friendship Day party. It is a complete festival experience created for friends, music lovers, and celebration seekers.
                     </p>
+                    <p class="event-description-text">
+                        <strong>WHAT TO EXPECT:</strong><br/>
+                        • Heaven and Ancient Egypt themed festival.<br/>
+                        • Premium Mumbai style clubbing experience.<br/>
+                        • Live performances, laser shows & unlimited memories.
+                    </p>
 
                     <button type="button" class="notes-trigger-btn" data-bs-toggle="modal" data-bs-target="#eventNotesModal">
                         <span><i class="fas fa-exclamation-circle me-2"></i> Read Important Guidelines & Notes</span>
@@ -841,8 +826,8 @@
             </div>
 
             <!-- COLUMN 3: Booking Card -->
-            <div class="col-12 col-lg-3">
-                <div class="glass-box booking-card">
+            <div class="col-12 col-lg-3 order-box-3">
+                <div class="booking-card">
                     
                     <button type="button" class="arrange-map-link font-royal" data-bs-toggle="modal" data-bs-target="#seatingMapModal">
                         <i class="fas fa-map-marked-alt"></i> Sitting Arrangement Map
@@ -871,13 +856,15 @@
                         </div>
 
                         <label class="form-label fw-bold text-muted small">AVAILABLE SEATS</label>
-                        <div class="seat-pills-wrapper">
+                        <div class="seat-pills-wrapper" id="seatContainer">
                             <span class="seat-pill" onclick="toggleSeat(this)">B1</span>
                             <span class="seat-pill" onclick="toggleSeat(this)">B2</span>
                             <span class="seat-pill" onclick="toggleSeat(this)">B3</span>
                             <span class="seat-pill" onclick="toggleSeat(this)">C2</span>
                             <span class="seat-pill" onclick="toggleSeat(this)">C3</span>
                             <span class="seat-pill" onclick="toggleSeat(this)">C4</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C5</span>
+                            <span class="seat-pill" onclick="toggleSeat(this)">C6</span>
                         </div>
                     </div>
 
@@ -922,7 +909,7 @@
 
     </div>
 
-      <!-- SEATING MAP MODAL -->
+    <!-- SEATING MAP MODAL -->
     <div class="modal fade glass-modal" id="seatingMapModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -965,21 +952,27 @@
         </div>
     </div>
 
-    <!-- LIGHTBOX OVERLAY -->
+    <!-- FULLSCREEN LIGHTBOX MODAL WITH MATCHING BG (#f5e8df) -->
     <div class="lightbox-overlay" id="lightboxOverlay">
         <div class="lightbox-topbar">
             <div class="lightbox-counter" id="lbCounter">1 / 4</div>
-            <div class="lb-btn" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+            <div class="lightbox-toolbar">
+                <button class="lb-btn" onclick="zoomIn()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                <button class="lb-btn" onclick="zoomOut()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+                <button class="lb-btn" onclick="resetZoom()" title="Reset Zoom"><i class="fas fa-compress-arrows-alt"></i></button>
+                <button class="lb-btn" onclick="closeLightbox()" title="Close (Esc)"><i class="fas fa-times"></i></button>
+            </div>
         </div>
+
         <div class="lightbox-stage">
             <button class="lightbox-nav-btn lb-prev" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
-            <img id="lightboxImg" class="lightbox-img" src="" alt="Zoom" />
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Lightbox Image" />
             <button class="lightbox-nav-btn lb-next" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
     <!-- Scripts -->
-       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         let currentPrice = 300;
@@ -995,38 +988,104 @@
         ];
 
         let currentImageIndex = 0;
+        let zoomLevel = 1;
 
         function openLightbox(index) {
             currentImageIndex = index;
+            zoomLevel = 1;
             updateLightbox();
-            document.getElementById('lightboxOverlay').classList.add('active');
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openCustomMapZoom(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lbCounter').innerText = 'Seating Map';
+            zoomLevel = 1;
+            applyZoom();
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
-            document.getElementById('lightboxOverlay').classList.remove('active');
+            const lb = document.getElementById('lightboxOverlay');
+            lb.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         function nextImage() {
             currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            zoomLevel = 1;
             updateLightbox();
         }
 
         function prevImage() {
             currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            zoomLevel = 1;
             updateLightbox();
         }
 
         function updateLightbox() {
-            document.getElementById('lightboxImg').src = galleryImages[currentImageIndex];
+            const img = document.getElementById('lightboxImg');
+            img.src = galleryImages[currentImageIndex];
             document.getElementById('lbCounter').innerText = `${currentImageIndex + 1} / ${galleryImages.length}`;
+            applyZoom();
+
+            document.getElementById('mainCoverImage').src = galleryImages[currentImageIndex];
+            document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === currentImageIndex);
+            });
         }
+
+        function zoomIn() {
+            if (zoomLevel < 3) {
+                zoomLevel += 0.3;
+                applyZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (zoomLevel > 0.6) {
+                zoomLevel -= 0.3;
+                applyZoom();
+            }
+        }
+
+        function resetZoom() {
+            zoomLevel = 1;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            const img = document.getElementById('lightboxImg');
+            img.style.transform = `scale(${zoomLevel})`;
+        }
+
+        document.getElementById('lightboxOverlay').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) zoomIn();
+            else zoomOut();
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e) {
+            const lb = document.getElementById('lightboxOverlay');
+            if (lb.classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
 
         function switchBookingMode(mode) {
             bookingMode = mode;
             document.getElementById('tabSeatMode').classList.toggle('active', mode === 'seat');
             document.getElementById('tabDirectMode').classList.toggle('active', mode === 'direct');
+            
             document.getElementById('seatSelectionPanel').style.display = mode === 'seat' ? 'block' : 'none';
             document.getElementById('directSelectionPanel').style.display = mode === 'direct' ? 'block' : 'none';
+            
             calculateTotal();
         }
 
