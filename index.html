@@ -1,944 +1,1138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>TicketHub · Book Movies & Events</title>
-    
-    <!-- Google Font: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <style>
-        :root {
-            --primary: #f47721;
-            --primary-dark: #e06512;
-            --secondary: #d82ec6;
-            --tertiary: #9b10b5;
-            --gradient-main: linear-gradient(195deg, #dd936b, #ab39ac);
-            --gradient-glow: linear-gradient(135deg, #f47721 0%, #d82ec6 70%, #9b10b5 100%);
-            --bg-body: #f5e8df;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --shadow-sm: 0 8px 24px rgba(155, 16, 181, 0.08);
-            --shadow-hover: 0 16px 36px rgba(155, 16, 181, 0.16);
-            --radius-card: 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden !important;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-body);
-            color: var(--text-main);
-            padding-bottom: 18px;
-            -webkit-font-smoothing: antialiased;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -20%;
-            left: -20%;
-            width: 140%;
-            height: 140%;
-            background: radial-gradient(circle at 20% 30%, rgba(244, 119, 33, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(155, 16, 181, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* HEADER */
-        .header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.3px;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .logo i {
-            font-size: 1.4rem;
-            -webkit-text-fill-color: transparent;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-wrapper i {
-            position: absolute;
-            left: 14px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .search-bar {
-            background: rgba(241, 245, 249, 0.8);
-            border: 1px solid rgba(203, 213, 225, 0.8);
-            border-radius: 50px;
-            padding: 8px 16px 8px 38px;
-            width: 180px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .search-bar:focus {
-            background: #fff;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 4px rgba(216, 46, 198, 0.1);
-            width: 220px;
-        }
-
-        .icon-btn {
-            background: #fff;
-            border: 1px solid var(--glass-border);
-            font-size: 1.1rem;
-            color: var(--text-main);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.25s;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .icon-btn:hover {
-            background: var(--gradient-main);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* SIDENAV */
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            overflow-x: hidden;
-            transition: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 300;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
-            padding-top: 60px;
-        }
-
-        .sidenav.open {
-            width: 280px;
-        }
-
-        .sidenav .close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            font-size: 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .sidenav a {
-            padding: 14px 24px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            transition: 0.2s;
-        }
-
-        .sidenav a i {
-            width: 22px;
-            color: var(--tertiary);
-            font-size: 1.1rem;
-        }
-
-        .sidenav a:hover {
-            background: var(--gradient-main);
-            color: white;
-        }
-
-        .sidenav a:hover i {
-            color: white;
-        }
-
-        .sidenav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 250;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-
-        .sidenav-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .container-custom {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 16px 16px 0;
-        }
-
-        /* HERO SLIDER */
-        .slider-section {
-            position: relative;
-            width: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 24px;
-            box-shadow: 0 12px 30px rgba(155, 16, 181, 0.1);
-            background: #0b0e1a;
-            height: 220px;
-        }
-
-        .slider-wrapper {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .slide {
-            width: 33.333%;
-            height: 100%;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .slide-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
-        }
-
-        .slide-content {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            z-index: 4;
-            color: #fff;
-        }
-
-        .slide-tag {
-            display: inline-block;
-            background: var(--gradient-main);
-            color: white;
-            padding: 3px 12px;
-            border-radius: 40px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-
-        .slide-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 4px;
-        }
-
-        .slide-desc {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .btn-book {
-            background: var(--gradient-main);
-            border: none;
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.25s;
-        }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 12px;
-            right: 20px;
-            display: flex;
-            gap: 6px;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dot.active {
-            background: var(--primary);
-            width: 22px;
-        }
-
-        /* FILTER CHIPS (NO SCROLLBAR) */
-        .filter-container {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .filter-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .chip {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
-            border: 1px solid var(--glass-border);
-            padding: 7px 18px;
-            border-radius: 40px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-        }
-
-        .chip.active, .chip:hover {
-            background: var(--gradient-main);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 6px 16px rgba(216, 46, 198, 0.2);
-        }
-
-        /* SECTION TITLES */
-        .category-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .category-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-main);
-        }
-
-        .category-title i {
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.3rem;
-        }
-
-        .see-all {
-            font-weight: 700;
-            color: var(--primary-dark);
-            text-decoration: none;
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.6);
-            transition: 0.2s;
-        }
-
-        /* CARDS GRID */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .card-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            background: #eef2f6;
-            overflow: hidden;
-        }
-
-        .card-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .promoted-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--gradient-glow);
-            color: white;
-            font-size: 0.55rem;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 30px;
-            text-transform: uppercase;
-        }
-
-        .card-info {
-            padding: 10px 12px;
-            background: var(--gradient-main);
-            color: #fff;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-meta-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.9);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .movie-title {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.25;
-            margin-bottom: 6px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card-price {
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .card-price span {
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.75);
-            font-weight: 500;
-        }
-
-        /* UPCOMING EVENTS HORIZONTAL SLIDER */
-        .event-slider-section {
-            position: relative;
-            margin: 8px 0 20px;
-        }
-
-        .event-slider-wrapper {
-            overflow-x: auto;
-            overflow-y: hidden;
-            border-radius: 20px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            padding: 4px 0;
-        }
-
-        .event-slider-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .event-slider-track {
-            display: flex;
-            gap: 14px;
-            width: max-content;
-        }
-
-        .event-card {
-            width: 200px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--glass-border);
-            flex-shrink: 0;
-        }
-
-        .event-card .card-image-wrapper {
-            height: 220px;
-        }
-
-        .slider-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #fff;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            color: var(--text-main);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .slider-nav-left { left: -6px; }
-        .slider-nav-right { right: -6px; }
-
-        /* DESKTOP RESPONSIVE ADJUSTMENTS */
-        @media (min-width: 768px) {
-            .nav-container { padding: 14px 24px; }
-            .logo { font-size: 1.8rem; }
-            .search-bar { width: 280px; }
-            .search-bar:focus { width: 320px; }
-            .slider-section { height: 320px; }
-            .slide-title { font-size: 2.2rem; }
-            .slide-desc { font-size: 0.95rem; -webkit-line-clamp: 2; }
-            .category-title { font-size: 1.5rem; }
-            .card-image-wrapper { height: 320px; }
-            .event-card { width: 260px; }
-            .event-card .card-image-wrapper { height: 300px; }
-            .card-info { padding: 12px 16px; }
-            .movie-title { font-size: 0.95rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Netlink · Book Movies & Events</title>
+  
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #f47721;
+      --primary-dark: #e06512;
+      --secondary: #d82ec6;
+      --tertiary: #9b10b5;
+      --gradient-main: linear-gradient(195deg, #dd936b, #ab39ac);
+      --gradient-glow: linear-gradient(135deg, #f47721 0%, #d82ec6 70%, #9b10b5 100%);
+      --bg-body: #f5e8df;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --shadow-sm: 0 8px 24px rgba(155, 16, 181, 0.08);
+      --shadow-hover: 0 16px 36px rgba(155, 16, 181, 0.16);
+      --radius-card: 15px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-body);
+      color: var(--text-main);
+      padding-bottom: 18px;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at 20% 30%, rgba(244, 119, 33, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(155, 16, 181, 0.05) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* HEADER */
+    .header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient-main);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.3px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo i {
+      font-size: 1.4rem;
+      -webkit-text-fill-color: transparent;
+      background: var(--gradient-main);
+      -webkit-background-clip: text;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-wrapper i {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .search-bar {
+      background: rgba(241, 245, 249, 0.8);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      border-radius: 50px;
+      padding: 8px 16px 8px 38px;
+      width: 180px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .search-bar:focus {
+      background: #fff;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(216, 46, 198, 0.1);
+      width: 220px;
+    }
+
+    .icon-btn {
+      background: #fff;
+      border: 1px solid var(--glass-border);
+      font-size: 1.1rem;
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.25s;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .icon-btn:hover {
+      background: var(--gradient-main);
+      color: white;
+      border-color: transparent;
+      transform: scale(1.05);
+    }
+
+    /* SIDENAV */
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow-x: hidden;
+      transition: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 300;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+      padding-top: 60px;
+    }
+
+    .sidenav.open {
+      width: 280px;
+    }
+
+    .sidenav .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sidenav .close-btn:hover {
+      color: var(--primary);
+      transform: rotate(90deg);
+    }
+
+    .sidenav a {
+      padding: 14px 24px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+      transition: 0.2s;
+    }
+
+    .sidenav a i {
+      width: 22px;
+      color: var(--tertiary);
+      font-size: 1.1rem;
+    }
+
+    .sidenav a:hover {
+      background: var(--gradient-main);
+      color: white;
+      padding-left: 28px;
+    }
+
+    .sidenav a:hover i {
+      color: white;
+    }
+
+    .sidenav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 250;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .sidenav-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .container-custom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 16px 0;
+    }
+
+    /* HERO SLIDER */
+    .slider-section {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 30px rgba(155, 16, 181, 0.1);
+      background: #0b0e1a;
+      height: 180px;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .slide {
+      width: 33.333%;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 4;
+      color: #fff;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      background: var(--gradient-main);
+      color: white;
+      padding: 3px 12px;
+      border-radius: 40px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .slide-desc {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .btn-book {
+      background: var(--gradient-main);
+      border: none;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 4px 12px rgba(216,46,198,0.3);
+    }
+
+    .btn-book:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(216,46,198,0.5);
+      background: var(--gradient-glow);
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 12px;
+      right: 20px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background: var(--primary);
+      width: 22px;
+    }
+
+    /* FILTER CHIPS */
+    .filter-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .filter-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--glass-border);
+      padding: 7px 18px;
+      border-radius: 40px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chip.active, .chip:hover {
+      background: var(--gradient-main);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba(216, 46, 198, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* SECTION TITLES */
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .category-title i {
+      background: var(--gradient-main);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.3rem;
+    }
+
+    .see-all {
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.6);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .see-all:hover {
+      background: white;
+      color: var(--secondary);
+    }
+
+    .card {
+      animation: popIn .75s ease both;
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(216,46,198,0.3);
+    }
+
+    .card-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #eef2f6;
+      overflow: hidden;
+    }
+
+    .card-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .card-image-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .promoted-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--gradient-glow);
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .card-info {
+      padding: 12px 14px;
+      background: var(--gradient-main);
+      color: #fff;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-meta-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .movie-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    a.text-decoration-none:hover .movie-title {
+      text-decoration: underline;
+    }
+
+    .card-price {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .card-price span {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 500;
+    }
+
+    /* UPCOMING EVENTS HORIZONTAL SLIDER */
+    .event-slider-section {
+      position: relative;
+      margin: 8px 0 20px;
+    }
+
+    .event-slider-wrapper {
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-radius: 20px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding: 4px 0;
+    }
+
+    .event-slider-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .event-slider-track {
+      display: flex;
+      gap: 14px;
+      width: max-content;
+    }
+
+    .event-card {
+      width: 200px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--glass-border);
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .event-card .card-image-wrapper {
+      height: 200px;
+    }
+
+    .slider-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.25s;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .slider-nav-btn.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slider-nav-btn:hover {
+      background: var(--gradient-main);
+      color: white;
+      border-color: transparent;
+    }
+
+    .slider-nav-left { left: -6px; }
+    .slider-nav-right { right: -6px; }
+
+    /* MOBILE FIRST: col-12 for recommended cards with proper sizing */
+    @media (max-width: 575.98px) {
+      .container-custom {
+        padding: 12px 12px 0;
+      }
+      
+      #recommendedGrid .col-12 {
+        width: 100%;
+        margin-bottom: 12px;
+      }
+      
+      .card-image-wrapper {
+        height: 280px;
+      }
+      
+      .card-info {
+        padding: 10px 12px;
+      }
+      
+      .movie-title {
+        font-size: 0.85rem;
+      }
+      
+      .event-card {
+        width: 180px;
+      }
+      
+      .event-card .card-image-wrapper {
+        height: 180px;
+      }
+      
+      .slider-nav-btn {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    /* Tablet and up */
+    @media (min-width: 768px) {
+      .nav-container { padding: 14px 24px; }
+      .logo { font-size: 1.8rem; }
+      .search-bar { width: 280px; }
+      .search-bar:focus { width: 320px; }
+      .slider-section { height: 350px; }
+      .slide-title { font-size: 2.2rem; }
+      .slide-desc { font-size: 0.95rem; -webkit-line-clamp: 2; }
+      .category-title { font-size: 1.5rem; }
+      .card-image-wrapper { height: 430px; }
+      .event-card { width: 240px; }
+      .event-card .card-image-wrapper { height: 260px; }
+      .card-info { padding: 14px 16px; }
+      .movie-title { font-size: 0.95rem; }
+      .slider-nav-btn {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .card-image-wrapper { height: 300px; }
+      .event-card { width: 260px; }
+      .event-card .card-image-wrapper { height: 280px; }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- SIDENAV -->
-    <div class="sidenav-overlay" id="sidenavOverlay" onclick="closeSidenav()"></div>
-    <div class="sidenav" id="sidenav">
-        <button class="close-btn" onclick="closeSidenav()"><i class="fas fa-times"></i></button>
-        <a href="#"><i class="fas fa-film"></i> Movies</a>
-        <a href="#"><i class="fas fa-music"></i> Events</a>
-        <a href="#"><i class="fas fa-baseball-ball"></i> Sports</a>
-        <a href="#"><i class="fas fa-theater-masks"></i> Comedy</a>
-        <a href="#"><i class="fas fa-ticket-alt"></i> My Bookings</a>
-        <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+  <!-- SIDENAV -->
+  <div class="sidenav-overlay" id="sidenavOverlay" onclick="closeSidenav()"></div>
+  <div class="sidenav" id="sidenav">
+    <button class="close-btn" onclick="closeSidenav()"><i class="fas fa-times"></i></button>
+    <a href="#"><i class="fas fa-film"></i> Movies</a>
+    <a href="#"><i class="fas fa-music"></i> Events</a>
+    <a href="#"><i class="fas fa-baseball-ball"></i> Sports</a>
+    <a href="#"><i class="fas fa-theater-masks"></i> Comedy</a>
+    <a href="#"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+    <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="logo"><i class="fas fa-ticket-alt"></i>Netlink</a>
+      <div class="header-actions">
+        <div class="search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" class="search-bar" placeholder="Search events..." />
+        </div>
+        <button class="icon-btn" onclick="openSidenav()" aria-label="menu"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container-custom">
+
+    <!-- HERO BANNER -->
+    <div class="slider-section">
+      <div class="slider-wrapper" id="sliderWrapper">
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80" alt="festival" />
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-tag">Trending</span>
+            <h2 class="slide-title">13 Days · 13 Nights</h2>
+            <p class="slide-desc">India's biggest carnival & music experience.</p>
+            <a href="details.html"><button class="btn-book">Book Now</button></a>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80" alt="movie" />
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-tag">Blockbuster</span>
+            <h2 class="slide-title">The Odyssey 3D</h2>
+            <p class="slide-desc">IMAX 3D · up to 30% cashback.</p>
+            <a href="details.html"><button class="btn-book">Reserve Seats</button></a>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&q=80" alt="comedy" />
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-tag">Live Comedy</span>
+            <h2 class="slide-title">Standup Night Live</h2>
+            <p class="slide-desc">Delhi · Mumbai · Surat.</p>
+            <a href="details.html"><button class="btn-book">Get Pass</button></a>
+          </div>
+        </div>
+      </div>
+      <div class="slider-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+      </div>
     </div>
 
-    <!-- HEADER -->
-    <header class="header">
-        <div class="nav-container">
-            <a href="#" class="logo"><i class="fas fa-ticket-alt"></i> TicketHub</a>
-            <div class="header-actions">
-                <div class="search-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" class="search-bar" placeholder="Search events..." />
-                </div>
-                <button class="icon-btn" onclick="openSidenav()" aria-label="menu"><i class="fas fa-bars"></i></button>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTAINER -->
-    <div class="container-custom">
-
-        <!-- HERO BANNER -->
-        <div class="slider-section">
-            <div class="slider-wrapper" id="sliderWrapper">
-                <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80" alt="festival" />
-                    <div class="slide-overlay"></div>
-                    <div class="slide-content">
-                        <span class="slide-tag">Trending</span>
-                        <h2 class="slide-title">13 Days · 13 Nights</h2>
-                        <p class="slide-desc">India's biggest carnival & music experience.</p>
-                        <a href="details.html"><button class="btn-book">Book Now</button></a>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80" alt="movie" />
-                    <div class="slide-overlay"></div>
-                    <div class="slide-content">
-                        <span class="slide-tag">Blockbuster</span>
-                        <h2 class="slide-title">The Odyssey 3D</h2>
-                        <p class="slide-desc">IMAX 3D · up to 30% cashback.</p>
-                        <a href="details.html"><button class="btn-book">Reserve Seats</button></a>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&q=80" alt="comedy" />
-                    <div class="slide-overlay"></div>
-                    <div class="slide-content">
-                        <span class="slide-tag">Live Comedy</span>
-                        <h2 class="slide-title">Standup Night Live</h2>
-                        <p class="slide-desc">Delhi · Mumbai · Surat.</p>
-                        <a href="details.html"><button class="btn-book">Get Pass</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="slider-dots">
-                <span class="dot active" onclick="goToSlide(0)"></span>
-                <span class="dot" onclick="goToSlide(1)"></span>
-                <span class="dot" onclick="goToSlide(2)"></span>
-            </div>
-        </div>
-
-        <!-- CATEGORY CHIPS (HORIZONTAL NO SCROLLBAR) -->
-        <div class="filter-container" id="filterContainer">
-            <div class="chip active" data-filter="all"><i class="fas fa-fire me-1"></i> All</div>
-            <div class="chip" data-filter="movies"><i class="fas fa-film me-1"></i> Movies</div>
-            <div class="chip" data-filter="comedy"><i class="fas fa-theater-masks me-1"></i> Comedy</div>
-            <div class="chip" data-filter="music"><i class="fas fa-music me-1"></i> Music</div>
-            <div class="chip" data-filter="sports"><i class="fas fa-baseball-ball me-1"></i> Sports</div>
-            <div class="chip" data-filter="arts"><i class="fas fa-paint-brush me-1"></i> Arts</div>
-        </div>
-
-        <!-- RECOMMENDED GRID (2 CARDS PER ROW ON MOBILE) -->
-        <section>
-            <div class="category-header">
-                <h2 class="category-title"><i class="fas fa-star"></i> Recommended</h2>
-                <span class="see-all">See all <i class="fas fa-arrow-right ms-1"></i></span>
-            </div>
-            
-            <div class="row g-2 g-md-4" id="recommendedGrid">
-
-                <!-- Card 1 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="music">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <span class="promoted-badge">PROMOTED</span>
-                            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Dil Dosti Dance" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>AUG 2 · 7PM</span>
-                                    <span>Surat</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Dil Dosti Dance 2.0</h3></a>
-                            </div>
-                            <div class="card-price">₹350 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="comedy">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Hulaboo" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>JUN 19 · 10AM</span>
-                                    <span>Surat</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Hulaboo Happy Hours</h3></a>
-                            </div>
-                            <div class="card-price">₹294 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="music">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" alt="Homeland" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>AUG 2 · 7PM</span>
-                                    <span>Surat</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">HOMELAND Fest</h3></a>
-                            </div>
-                            <div class="card-price">₹500 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="sports">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&q=80" alt="7 Avatars" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>AUG 6 · 8:30AM</span>
-                                    <span>Surat</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">7 Avatars Entrepreneurs</h3></a>
-                            </div>
-                            <div class="card-price">₹1,000 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="movies">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <span class="promoted-badge">⭐ PREMIERE</span>
-                            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Jan Neta" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>OCT 24 · 9PM</span>
-                                    <span>Delhi</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Jan Neta (Drama)</h3></a>
-                            </div>
-                            <div class="card-price">₹280 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="col-6 col-md-4 col-lg-3 card-item" data-category="movies">
-                    <div class="card">
-                        <div class="card-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80" alt="Dhamaal 4" />
-                        </div>
-                        <div class="card-info">
-                            <div>
-                                <div class="card-meta-top">
-                                    <span>OCT 28 · 8PM</span>
-                                    <span>Mumbai</span>
-                                </div>
-                                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Dhamaal 4</h3></a>
-                            </div>
-                            <div class="card-price">₹320 <span>/ onward</span></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- UPCOMING EVENTS SLIDER -->
-        <section class="mt-4">
-            <div class="category-header">
-                <h2 class="category-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
-                <span class="see-all">Explore <i class="fas fa-arrow-right ms-1"></i></span>
-            </div>
-
-            <div class="event-slider-section">
-                <button class="slider-nav-btn slider-nav-left" id="eventScrollLeft" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-nav-btn slider-nav-right" id="eventScrollRight" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></button>
-
-                <div class="event-slider-wrapper" id="eventSliderWrapper">
-                    <div class="event-slider-track">
-
-                        <div class="event-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Event" />
-                            </div>
-                            <div class="card-info">
-                                <div>
-                                    <div class="card-meta-top"><span>DEC 15</span><span>Pune</span></div>
-                                    <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Sunburn Festival</h3></a>
-                                </div>
-                                <div class="card-price">₹1,500 <span>/ onward</span></div>
-                            </div>
-                        </div>
-
-                        <div class="event-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Event" />
-                            </div>
-                            <div class="card-info">
-                                <div>
-                                    <div class="card-meta-top"><span>DEC 20</span><span>Delhi</span></div>
-                                    <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Avengers: Secret Wars</h3></a>
-                                </div>
-                                <div class="card-price">₹400 <span>/ onward</span></div>
-                            </div>
-                        </div>
-
-                        <div class="event-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Event" />
-                            </div>
-                            <div class="card-info">
-                                <div>
-                                    <div class="card-meta-top"><span>DEC 28</span><span>Mumbai</span></div>
-                                    <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Comedy Circus Live</h3></a>
-                                </div>
-                                <div class="card-price">₹499 <span>/ onward</span></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
+    <!-- CATEGORY CHIPS -->
+    <div class="filter-container" id="filterContainer">
+      <div class="chip active" data-filter="all"><i class="fas fa-fire me-1"></i> All</div>
+      <div class="chip" data-filter="movies"><i class="fas fa-film me-1"></i> Movies</div>
+      <div class="chip" data-filter="comedy"><i class="fas fa-theater-masks me-1"></i> Comedy</div>
+      <div class="chip" data-filter="music"><i class="fas fa-music me-1"></i> Music</div>
+      <div class="chip" data-filter="sports"><i class="fas fa-baseball-ball me-1"></i> Sports</div>
+      <div class="chip" data-filter="arts"><i class="fas fa-paint-brush me-1"></i> Arts</div>
     </div>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        // CHIP FILTER
-        document.querySelectorAll('.chip').forEach(chip => {
-            chip.addEventListener('click', function () {
-                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-                const filter = this.dataset.filter;
-                document.querySelectorAll('#recommendedGrid .card-item').forEach(item => {
-                    const category = item.dataset.category;
-                    item.style.display = (filter === 'all' || category === filter) ? '' : 'none';
-                });
-            });
+    <!-- RECOMMENDED GRID (mobile col-12, proper width) -->
+    <section>
+      <div class="category-header">
+        <h2 class="category-title"><i class="fas fa-star"></i> Recommended</h2>
+        <span class="see-all">See all <i class="fas fa-arrow-right ms-1"></i></span>
+      </div>
+      
+      <div class="row g-3 g-md-4" id="recommendedGrid">
+
+        <!-- Card 1 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <span class="promoted-badge">PROMOTED</span>
+              <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Dil Dosti Dance" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>AUG 2 · 7PM</span>
+                  <span>Surat</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Dil Dosti Dance 2.0</h3></a>
+              </div>
+              <div class="card-price">₹350 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="comedy">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Hulaboo" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>JUN 19 · 10AM</span>
+                  <span>Surat</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Hulaboo Happy Hours</h3></a>
+              </div>
+              <div class="card-price">₹294 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="music">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" alt="Homeland" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>AUG 2 · 7PM</span>
+                  <span>Surat</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">HOMELAND Fest</h3></a>
+              </div>
+              <div class="card-price">₹500 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="sports">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&q=80" alt="7 Avatars" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>AUG 6 · 8:30AM</span>
+                  <span>Surat</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">7 Avatars Entrepreneurs</h3></a>
+              </div>
+              <div class="card-price">₹1,000 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <span class="promoted-badge">⭐ PREMIERE</span>
+              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Jan Neta" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>OCT 24 · 9PM</span>
+                  <span>Delhi</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Jan Neta (Drama)</h3></a>
+              </div>
+              <div class="card-price">₹280 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-item" data-category="movies">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80" alt="Dhamaal 4" />
+            </div>
+            <div class="card-info">
+              <div>
+                <div class="card-meta-top">
+                  <span>OCT 28 · 8PM</span>
+                  <span>Mumbai</span>
+                </div>
+                <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Dhamaal 4</h3></a>
+              </div>
+              <div class="card-price">₹320 <span>/ onward</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- UPCOMING EVENTS SLIDER -->
+    <section class="mt-4">
+      <div class="category-header">
+        <h2 class="category-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
+        <span class="see-all">Explore <i class="fas fa-arrow-right ms-1"></i></span>
+      </div>
+
+      <div class="event-slider-section" id="eventSliderContainer">
+        <button class="slider-nav-btn slider-nav-left" id="eventScrollLeft" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-nav-btn slider-nav-right" id="eventScrollRight" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="event-slider-wrapper" id="eventSliderWrapper">
+          <div class="event-slider-track" id="eventTrack">
+
+            <div class="event-card">
+              <div class="card-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" alt="Event" />
+              </div>
+              <div class="card-info">
+                <div>
+                  <div class="card-meta-top"><span>DEC 15</span><span>Pune</span></div>
+                  <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Sunburn Festival</h3></a>
+                </div>
+                <div class="card-price">₹1,500 <span>/ onward</span></div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="card-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" alt="Event" />
+              </div>
+              <div class="card-info">
+                <div>
+                  <div class="card-meta-top"><span>DEC 20</span><span>Delhi</span></div>
+                  <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Avengers: Secret Wars</h3></a>
+                </div>
+                <div class="card-price">₹400 <span>/ onward</span></div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="card-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" alt="Event" />
+              </div>
+              <div class="card-info">
+                <div>
+                  <div class="card-meta-top"><span>DEC 28</span><span>Mumbai</span></div>
+                  <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Comedy Circus Live</h3></a>
+                </div>
+                <div class="card-price">₹499 <span>/ onward</span></div>
+              </div>
+            </div>
+
+            <!-- 4th card to test button visibility (more than 4 needed for buttons) -->
+            <div class="event-card">
+              <div class="card-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" alt="Event" />
+              </div>
+              <div class="card-info">
+                <div>
+                  <div class="card-meta-top"><span>JAN 5</span><span>Goa</span></div>
+                  <a href="details.html" class="text-decoration-none"><h3 class="movie-title">Echoes of Earth</h3></a>
+                </div>
+                <div class="card-price">₹2,200 <span>/ onward</span></div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="card-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500&q=80" alt="Event" />
+              </div>
+              <div class="card-info">
+                <div>
+                  <div class="card-meta-top"><span>JAN 12</span><span>Bangalore</span></div>
+                  <a href="details.html" class="text-decoration-none"><h3 class="movie-title">NH7 Weekender</h3></a>
+                </div>
+                <div class="card-price">₹1,800 <span>/ onward</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    (function() {
+      // CHIP FILTER
+      document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', function () {
+          document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          document.querySelectorAll('#recommendedGrid .card-item').forEach(item => {
+            const category = item.dataset.category;
+            item.style.display = (filter === 'all' || category === filter) ? '' : 'none';
+          });
         });
+      });
 
-        // SIDENAV
-        function openSidenav() {
-            document.getElementById('sidenav').classList.add('open');
-            document.getElementById('sidenavOverlay').classList.add('show');
-            document.body.style.overflow = 'hidden';
+      // SIDENAV
+      window.openSidenav = function() {
+        document.getElementById('sidenav').classList.add('open');
+        document.getElementById('sidenavOverlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+      };
+      window.closeSidenav = function() {
+        document.getElementById('sidenav').classList.remove('open');
+        document.getElementById('sidenavOverlay').classList.remove('show');
+        document.body.style.overflow = '';
+      };
+
+      // HERO SLIDER
+      let current = 0, total = 3;
+      const wrapper = document.getElementById('sliderWrapper');
+      const dots = document.querySelectorAll('.dot');
+      let autoInterval;
+
+      function updateSlider() {
+        if (wrapper) {
+          wrapper.style.transform = `translateX(-${current * (100 / total)}%)`;
         }
-        function closeSidenav() {
-            document.getElementById('sidenav').classList.remove('open');
-            document.getElementById('sidenavOverlay').classList.remove('show');
-            document.body.style.overflow = '';
-        }
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
 
-        // HERO SLIDER
-        let current = 0, total = 3;
-        const wrapper = document.getElementById('sliderWrapper');
-        const dots = document.querySelectorAll('.dot');
-        let autoInterval;
-
-        function updateSlider() {
-            wrapper.style.transform = `translateX(-${current * (100 / total)}%)`;
-            dots.forEach((d, i) => d.classList.toggle('active', i === current));
-        }
-
-        window.goToSlide = function (i) {
-            current = i;
-            updateSlider();
-            resetAuto();
-        };
-
-        function resetAuto() {
-            clearInterval(autoInterval);
-            autoInterval = setInterval(() => {
-                current = (current + 1) % total;
-                updateSlider();
-            }, 4000);
-        }
-        
+      window.goToSlide = function (i) {
+        current = i;
         updateSlider();
+        resetAuto();
+      };
+
+      function resetAuto() {
+        clearInterval(autoInterval);
         autoInterval = setInterval(() => {
-            current = (current + 1) % total;
-            updateSlider();
+          current = (current + 1) % total;
+          updateSlider();
         }, 4000);
+      }
+      
+      updateSlider();
+      autoInterval = setInterval(() => {
+        current = (current + 1) % total;
+        updateSlider();
+      }, 4000);
 
-        // EVENT SLIDER SCROLL
-        const sliderWrapper = document.getElementById('eventSliderWrapper');
-        document.getElementById('eventScrollLeft').addEventListener('click', () => {
-            sliderWrapper.scrollBy({ left: -220, behavior: 'smooth' });
+      // EVENT SLIDER SCROLL & BUTTON VISIBILITY (show only if more than 4 cards)
+      const sliderWrapperEl = document.getElementById('eventSliderWrapper');
+      const track = document.getElementById('eventTrack');
+      const leftBtn = document.getElementById('eventScrollLeft');
+      const rightBtn = document.getElementById('eventScrollRight');
+      
+      function checkSliderButtons() {
+        if (!sliderWrapperEl || !track || !leftBtn || !rightBtn) return;
+        
+        // Get all event cards inside track
+        const cards = track.querySelectorAll('.event-card');
+        const cardCount = cards.length;
+        
+        // We need to compare scroll width vs client width to see if overflow exists
+        const hasOverflow = track.scrollWidth > sliderWrapperEl.clientWidth + 2; // small tolerance
+        
+        // Show buttons only if more than 4 cards AND there is overflow (scrollable)
+        if (cardCount > 4 && hasOverflow) {
+          leftBtn.classList.add('visible');
+          rightBtn.classList.add('visible');
+        } else {
+          leftBtn.classList.remove('visible');
+          rightBtn.classList.remove('visible');
+        }
+      }
+
+      // Initial check and on resize
+      window.addEventListener('load', checkSliderButtons);
+      window.addEventListener('resize', checkSliderButtons);
+      
+      // Also check after a small delay for dynamic content
+      setTimeout(checkSliderButtons, 100);
+
+      // Scroll buttons
+      if (leftBtn && rightBtn && sliderWrapperEl) {
+        leftBtn.addEventListener('click', () => {
+          sliderWrapperEl.scrollBy({ left: -240, behavior: 'smooth' });
         });
-        document.getElementById('eventScrollRight').addEventListener('click', () => {
-            sliderWrapper.scrollBy({ left: 220, behavior: 'smooth' });
+        rightBtn.addEventListener('click', () => {
+          sliderWrapperEl.scrollBy({ left: 240, behavior: 'smooth' });
         });
-    </script>
+        
+        // Update button visibility on scroll as well (in case user scrolls manually)
+        sliderWrapperEl.addEventListener('scroll', function() {
+          // re-check visibility based on overflow, but mainly we rely on card count > 4
+          const cards = track.querySelectorAll('.event-card');
+          if (cards.length > 4) {
+            const hasOverflow = track.scrollWidth > sliderWrapperEl.clientWidth + 2;
+            if (hasOverflow) {
+              leftBtn.classList.add('visible');
+              rightBtn.classList.add('visible');
+            } else {
+              leftBtn.classList.remove('visible');
+              rightBtn.classList.remove('visible');
+            }
+          } else {
+            leftBtn.classList.remove('visible');
+            rightBtn.classList.remove('visible');
+          }
+        });
+      }
+
+      // Ensure proper mobile responsive grid (already using col-12, but we adjust dynamically if needed)
+      // No additional changes required as Bootstrap handles col-12 on mobile.
+    })();
+  </script>
 </body>
-
 </html>
