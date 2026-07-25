@@ -355,17 +355,63 @@
         .organizer-tag { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
 
         .detail-group-title {
-            font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 0.5px; color: var(--primary); margin: 16px 0 10px;
-            border-bottom: 1px solid var(--glass-border); padding-bottom: 4px;
+            font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--primary); margin: 18px 0 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .detail-group-title::after {
+            content: ''; flex: 1; height: 1px; background: var(--glass-border);
         }
 
-        .meta-list { list-style: none; padding: 0; margin: 0 0 16px 0; }
-        .meta-list li {
-            padding: 4px 0; font-size: 0.8rem; display: flex; justify-content: space-between;
-            border-bottom: 1px border var(--glass-border);
-        }
-        .meta-list li strong { color: var(--text-muted); font-weight: 600; }
+        /* ===== MODERN EVENT OVERVIEW CARDS ===== */
+       /* Minimalist Strip Table */
+.overview-table-container {
+    background: #ffffff;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.overview-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(27, 18, 48, 0.05);
+    font-size: 0.82rem;
+    transition: background 0.2s;
+}
+
+.overview-table-row:nth-child(even) {
+    background: #FFF8F2;
+}
+
+.overview-table-row:last-child {
+    border-bottom: none;
+}
+
+.overview-table-row:hover {
+    background: rgba(255, 107, 77, 0.08);
+}
+
+.overview-table-key {
+    font-weight: 700;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.overview-table-key i {
+    color: var(--secondary);
+    width: 16px;
+}
+
+.overview-table-val {
+    font-weight: 800;
+    color: var(--primary);
+}
 
         .event-description-text { font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 12px; }
 
@@ -482,6 +528,7 @@
             .hero-details-banner { height: 260px; }
             .hero-event-name { font-size: 1.2rem; }
             .booking-card { position: relative; top: 0; }
+            .overview-cards-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -593,15 +640,34 @@
                         <div class="info-pill"><i class="fas fa-hourglass-half"></i> 5 Hours</div>
                     </div>
 
+                    <!-- NEW MODERN OVERVIEW CARDS -->
                     <h3 class="detail-group-title">Event Overview</h3>
-                    <ul class="meta-list">
-                        <li><strong>Place:</strong> <span>Tata Hall, Navsari</span></li>
-                        <li><strong>Timings:</strong> <span>9.15 PM to 12.00 PM</span></li>
-                        <li><strong>Category:</strong> <span>Comedy / Festival</span></li>
-                        <li><strong>Duration:</strong> <span>2.30 Hrs</span></li>
-                        <li><strong>Age Limit:</strong> <span>12+ Years</span></li>
-                        <li><strong>Language:</strong> <span>Gujarati</span></li>
-                    </ul>
+                    <div class="overview-table-container">
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="fas fa-building"></i> Place</span>
+                            <span class="overview-table-val">Tata Hall, Navsari</span>
+                        </div>
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="far fa-clock"></i> Timings</span>
+                            <span class="overview-table-val">9:15 PM - 12:00 PM</span>
+                        </div>
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="fas fa-icons"></i> Category</span>
+                            <span class="overview-table-val">Comedy / Festival</span>
+                        </div>
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="fas fa-stopwatch"></i> Duration</span>
+                            <span class="overview-table-val">2.30 Hrs</span>
+                        </div>
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="fas fa-user-shield"></i> Age Limit</span>
+                            <span class="overview-table-val">12+ Years</span>
+                        </div>
+                        <div class="overview-table-row">
+                            <span class="overview-table-key"><i class="fas fa-language"></i> Language</span>
+                            <span class="overview-table-val">Gujarati</span>
+                        </div>
+                    </div>
 
                     <h3 class="detail-group-title">Description</h3>
                     <p class="event-description-text">
