@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Netlink · Book Movies &amp; Events</title>
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Swiper.js CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ===== LIGHT THEME PALETTE & SYSTEM ===== */
+    :root {
+      --bg-light: #FFF8F2;            /* Cream Light Background */
+      --bg-card: #FFFFFF;             /* Pure White Surface */
+      --dark-navy: #1B1230;           /* Deep Navy for Text & Contrast */
+      --accent-coral: #FF6B4D;        /* Coral Orange Accent */
+      --accent-pink: #E91E63;         /* Hot Pink Accent */
+      --accent-amber: #FFB23C;        /* Amber Yellow Accent */
+      
+      --gradient-primary: linear-gradient(135deg, #FF6B4D 0%, #E91E63 100%);
+      --gradient-glow: linear-gradient(135deg, rgba(255,107,77,0.15) 0%, rgba(233,30,99,0.15) 100%);
+      --text-muted: #64748B;
+      --glass-bg: rgba(255, 248, 242, 0.88);
+      --card-shadow: 0 8px 20px rgba(27, 18, 48, 0.05);
+      --card-shadow-hover: 0 16px 32px rgba(233, 30, 99, 0.15);
+    }
+    
+    body {
+      background-color: var(--bg-light);
+      color: var(--dark-navy);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-light); }
+    ::-webkit-scrollbar-thumb { background: rgba(27, 18, 48, 0.2); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-coral); }
+
+    /* ===== HEADER ===== */
+    .navbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(27, 18, 48, 0.08);
+      padding: 0.7rem 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    .brand-logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+    }
+    .search-input {
+      background: #FFFFFF;
+      border: 1px solid rgba(27, 18, 48, 0.12);
+      border-radius: 20px;
+      padding: 8px 15px 8px 38px;
+      color: var(--dark-navy);
+      width: 100%;
+      font-size: 0.88rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: border-color 0.3s;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-coral);
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .nav-link { color: var(--dark-navy) !important; font-weight: 600; font-size: 0.9rem; }
+    .mobile-menu-btn { color: var(--dark-navy); font-size: 1.4rem; border: none; background: none; cursor: pointer; }
+
+    /* ===== SIDEBAR DRAWER ===== */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(27, 18, 48, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+    .sidebar-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 280px;
+      height: 100%;
+      background: var(--dark-navy);
+      color: #ffffff;
+      z-index: 1100;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+      transition: right 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-drawer.active { right: 0; }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sidebar-close-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sidebar-menu a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      transition: all 0.25s;
+    }
+    .sidebar-menu a i { color: var(--accent-amber); width: 20px; }
+    .sidebar-menu a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent-coral);
+    }
+
+    /* ===== MULTI-BANNER HERO SLIDER ===== */
+    .hero-swiper-container {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      min-height: 480px;
+      margin-top: 60px; /* Header Space */
+    }
+    .hero-slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(27, 18, 48, 0.35) 0%, rgba(27, 18, 48, 0.85) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #FFFFFF;
+      padding-bottom: 30px;
+    }
+    .badge-hot {
+      background: var(--accent-pink);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .hero-desc {
+      color: #E2E8F0;
+      max-width: 480px;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .event-meta { font-size: 0.85rem; color: white; margin-bottom: 1.5rem; }
+    .meta-item {
+      display: inline-flex; align-items: center; margin-right: 12px; margin-bottom: 8px;
+      background: rgba(27, 18, 48, 0.6); padding: 6px 12px; border-radius: 6px;
+      backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .meta-item i { color: var(--accent-amber); }
+    
+    .btn-book {
+      background: var(--gradient-primary);
+      border: none; padding: 12px 32px; border-radius: 30px;
+      color: white; font-weight: 700; transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(233, 30, 99, 0.3);
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-book:hover { transform: scale(1.05); color: white; box-shadow: 0 6px 25px rgba(255, 107, 77, 0.5); }
+
+    /* Hero Swiper Pagination Dots */
+    .hero-swiper-pagination {
+      position: absolute;
+      bottom: 25px !important;
+      left: 50% !important;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .hero-swiper-pagination .swiper-pagination-bullet {
+      background: #FFFFFF;
+      opacity: 0.4;
+      width: 8px;
+      height: 8px;
+      margin: 0 !important;
+      transition: all 0.3s ease;
+    }
+    .hero-swiper-pagination .swiper-pagination-bullet-active {
+      background: var(--accent-coral);
+      opacity: 1;
+      width: 22px;
+      border-radius: 10px;
+    }
+
+    /* ===== CATEGORIES WITH GRADIENT & ADJUSTED MARGIN ===== */
+    .categories-section { 
+      margin-top: 24px;
+      position: relative; 
+      z-index: 10; 
+      padding-bottom: 1.5rem; 
+    }
+    
+    .cat-card {
+      background: var(--gradient-primary); 
+      border: 1px solid transparent;
+      border-radius: 14px; 
+      padding: 12px 18px; 
+      text-align: center;
+      transition: all 0.3s ease; 
+      cursor: pointer; 
+      min-width: 105px;
+      box-shadow: 0 6px 18px rgba(233, 30, 99, 0.2);
+      user-select: none;
+      color: #FFFFFF;
+    }
+    
+    .cat-card.active, .cat-card:hover { 
+      background: var(--dark-navy);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(27, 18, 48, 0.25);
+    }
+
+    .cat-name { display: block; font-weight: 800; font-size: 0.9rem; color: #FFFFFF; }
+    .cat-count { display: block; font-size: 0.68rem; opacity: 0.85; font-weight: 500; }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title-wrap {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;
+    }
+    .section-title { font-size: 1.35rem; font-weight: 800; color: var(--dark-navy); }
+    .view-all { color: var(--accent-pink); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+
+    /* ===== EVENT CARD (NO TITLE CUT & LINK SUPPORT) ===== */
+    .event-card { 
+      background: var(--bg-card); 
+      border-radius: 16px; 
+      padding: 10px;
+      margin-bottom: 1rem; 
+      transition: all 0.3s ease; 
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(27, 18, 48, 0.06);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .event-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: var(--card-shadow-hover);
+      border-color: rgba(233, 30, 99, 0.2);
+    }
+    .card-img-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 4/5; margin-bottom: 10px; display: block;
+    }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .card-label {
+      position: absolute; top: 8px; left: 8px;
+      background: rgba(27, 18, 48, 0.75); backdrop-filter: blur(4px);
+      color: #FFFFFF; padding: 2px 8px; border-radius: 6px; font-size: 0.62rem; font-weight: 600;
+    }
+    .card-badge {
+      position: absolute; top: 8px; right: 8px;
+      padding: 2px 8px; border-radius: 6px; font-size: 0.62rem; font-weight: 800;
+    }
+    .badge-yellow { background: var(--accent-amber); color: #1B1230; }
+    .badge-pink { background: var(--accent-pink); color: white; }
+    .badge-red { background: var(--accent-coral); color: white; }
+    .badge-purple { background: var(--gradient-primary); color: white; }
+    
+    /* Title link & full display styling */
+    .card-title-link {
+      text-decoration: none !important;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-size: 0.95rem; 
+      font-weight: 800; 
+      color: var(--dark-navy); 
+      margin-bottom: 0;
+      line-height: 1.35;
+      padding: 0 2px;
+      white-space: normal;  /* Title show completely */
+      overflow: visible;
+      word-break: break-word;
+      transition: color 0.25s ease;
+    }
+    .card-title-link:hover .card-title,
+    .event-card:hover .card-title {
+      color: var(--accent-pink);
+    }
+
+    .card-info { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px; padding: 0 2px; font-weight: 500; }
+    .card-footer-flex {
+      display: flex; justify-content: space-between; align-items: center; padding: 0 2px 2px;
+    }
+    .price-label { font-size: 0.58rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+    .price-value { font-weight: 800; font-size: 0.98rem; color: var(--accent-pink); }
+    .btn-arrow {
+      width: 28px; height: 28px; background: rgba(27, 18, 48, 0.05);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--dark-navy); transition: all 0.3s; text-decoration: none; font-size: 0.75rem;
+    }
+    .event-card:hover .btn-arrow { background: var(--gradient-primary); color: white; transform: scale(1.08); }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 575.98px) {
+      .hero-swiper-container { height: 55vh; min-height: 380px; }
+      .hero-title { font-size: 1.8rem; }
+      .hero-desc { font-size: 0.85rem; margin-bottom: 0.8rem; }
+      .btn-book { padding: 8px 22px; font-size: 0.8rem; }
+      .card-img-wrap { aspect-ratio: 3.5/4; }
+      .container { padding-left: 12px; padding-right: 12px; }
+      .categories-section { margin-top: 16px; }
+    }
+    @media (min-width: 1200px) { 
+      .col-lg-2-4 { flex: 0 0 auto; width: 20%; } 
+    }
+    .bg-light-variant { background: rgba(27, 18, 48, 0.02); }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY & DRAWER -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar-drawer" id="sidebarDrawer">
+  <div class="sidebar-header">
+    <span class="brand-logo-text">Netlink</span>
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu"><i class="fas fa-times"></i></button>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="#"><i class="fas fa-film"></i> Movies</a></li>
+    <li><a href="#"><i class="fas fa-music"></i> Events & Concerts</a></li>
+    <li><a href="#"><i class="fas fa-baseball-ball"></i> Sports</a></li>
+    <li><a href="#"><i class="fas fa-theater-masks"></i> Comedy Shows</a></li>
+    <li><a href="#"><i class="fas fa-ticket-alt"></i> My Bookings</a></li>
+    <li><a href="#"><i class="fas fa-user-circle"></i> Profile & Settings</a></li>
+  </ul>
+</aside>
+
+<!-- HEADER -->
+<header class="fixed-top">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="brand-logo-text" href="#">Netlink</a>
+      
+      <div class="search-container d-none d-lg-block mx-auto">
+        <i class="fas fa-search search-icon"></i>
+        <input class="search-input" placeholder="Search for movies, events, sports..." type="text" />
+      </div>
+      
+      <div class="d-flex align-items-center gap-3">
+        <a class="nav-link d-none d-md-block" href="#"><i class="far fa-calendar-check me-2" style="color: var(--accent-coral);"></i> My Bookings</a>
+        <button class="mobile-menu-btn" id="sidebarOpenBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+<!-- MULTI BANNER AUTO HERO SLIDER -->
+<section class="hero-swiper-container">
+  <div class="swiper heroSwiper h-100">
+    <div class="swiper-wrapper">
+      
+      <!-- Slide 1 -->
+      <div class="swiper-slide hero-slide">
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80" alt="Homeland Fest" />
+        <div class="hero-overlay"></div>
+        <div class="container h-100">
+          <div class="row h-100 align-items-end">
+            <div class="col-lg-8 hero-content" data-aos="fade-up">
+              <span class="badge-hot">Hot</span>
+              <h1 class="hero-title">HOMELAND Fest</h1>
+              <p class="hero-desc">An open-air music festival celebrating independent Indian artists across genres.</p>
+              <div class="event-meta">
+                <div class="meta-item"><i class="far fa-calendar me-2"></i> AUG 2 • 7PM</div>
+                <div class="meta-item"><i class="fas fa-map-marker-alt me-2"></i> Surat</div>
+              </div>
+              <a class="btn btn-book" href="details-1.html">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="swiper-slide hero-slide">
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80" alt="The Odyssey 3D" />
+        <div class="hero-overlay"></div>
+        <div class="container h-100">
+          <div class="row h-100 align-items-end">
+            <div class="col-lg-8 hero-content">
+              <span class="badge-hot" style="background: var(--accent-coral);">Blockbuster</span>
+              <h1 class="hero-title">The Odyssey 3D</h1>
+              <p class="hero-desc">Experience IMAX 3D like never before. Up to 30% cashback on early tickets.</p>
+              <div class="event-meta">
+                <div class="meta-item"><i class="far fa-calendar me-2"></i> OCT 24 • 9PM</div>
+                <div class="meta-item"><i class="fas fa-map-marker-alt me-2"></i> Delhi</div>
+              </div>
+              <a class="btn btn-book" href="details-1.html">Reserve Seats</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide hero-slide">
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200&q=80" alt="Standup Night Live" />
+        <div class="hero-overlay"></div>
+        <div class="container h-100">
+          <div class="row h-100 align-items-end">
+            <div class="col-lg-8 hero-content">
+              <span class="badge-hot" style="background: var(--accent-amber); color:#1B1230;">Comedy</span>
+              <h1 class="hero-title">Standup Night Live</h1>
+              <p class="hero-desc">Non-stop laughter with top standup comedians across India.</p>
+              <div class="event-meta">
+                <div class="meta-item"><i class="far fa-calendar me-2"></i> JUN 19 • 10AM</div>
+                <div class="meta-item"><i class="fas fa-map-marker-alt me-2"></i> Mumbai</div>
+              </div>
+              <a class="btn btn-book" href="details-1.html">Get Pass</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Swiper Dots -->
+    <div class="hero-swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES SWIPER SLIDER (GRADIENT CHIPS) -->
+<section class="categories-section">
+  <div class="container">
+    <div class="swiper category-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="cat-card active" data-category="all">
+            <span class="cat-name">All</span>
+            <span class="cat-count">14 Events</span>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="cat-card" data-category="movies">
+            <span class="cat-name">Movies</span>
+            <span class="cat-count">4 Events</span>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="cat-card" data-category="music">
+            <span class="cat-name">Music</span>
+            <span class="cat-count">5 Events</span>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="cat-card" data-category="comedy">
+            <span class="cat-name">Comedy</span>
+            <span class="cat-count">3 Events</span>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="cat-card" data-category="sports">
+            <span class="cat-name">Sports</span>
+            <span class="cat-count">1 Events</span>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="cat-card" data-category="arts">
+            <span class="cat-name">Arts</span>
+            <span class="cat-count">1 Events</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDED -->
+<section class="py-3">
+  <div class="container">
+    <div class="section-title-wrap">
+      <div>
+        <h2 class="section-title">Recommended For You</h2>
+        <p class="text-muted small mb-0">The best events handpicked for you in India.</p>
+      </div>
+      <a class="view-all" href="#">View All <i class="fas fa-chevron-right ms-1"></i></a>
+    </div>
+    
+    <div class="row g-2 g-md-4" id="recommendedContainer">
+      <!-- Card 1 -->
+      <div class="col-12 col-md-4 col-lg-3 event-item" data-category="comedy" data-aos="fade-up" data-aos-delay="100">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" />
+            <div class="card-label">Comedy</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Hulaboo Happy Hours</h3>
+          </a>
+          <div class="card-info">JUN 19 • Surat</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹294</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="col-12 col-md-4 col-lg-3 event-item" data-category="music" data-aos="fade-up" data-aos-delay="200">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" />
+            <div class="card-label">Music</div>
+            <div class="card-badge badge-red">HOT</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">HOMELAND Fest 2026</h3>
+          </a>
+          <div class="card-info">AUG 2 • Surat</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹500</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="col-12 col-md-4 col-lg-3 event-item" data-category="arts" data-aos="fade-up" data-aos-delay="300">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=500&q=80" />
+            <div class="card-label">Arts</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">7 Avatars Entrepreneurship Conference</h3>
+          </a>
+          <div class="card-info">AUG 6 • Surat</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹1,000</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 4 -->
+      <div class="col-12 col-md-4 col-lg-3 event-item" data-category="movies" data-aos="fade-up" data-aos-delay="400">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" />
+            <div class="card-label">Movies</div>
+            <div class="card-badge badge-pink">PREMIERE</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Jan Neta (Political Drama)</h3>
+          </a>
+          <div class="card-info">OCT 24 • Delhi</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹280</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 5 -->
+      <div class="col-12 col-md-4 col-lg-3 event-item" data-category="movies" data-aos="fade-up" data-aos-delay="500">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80" />
+            <div class="card-label">Movies</div>
+            <div class="card-badge badge-yellow">BLOCKBUSTER</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Dhamaal 4: Unlimited Fun</h3>
+          </a>
+          <div class="card-info">OCT 28 • Mumbai</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹320</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING -->
+<section class="py-4 bg-light-variant">
+  <div class="container">
+    <div class="section-title-wrap">
+      <h2 class="section-title">Upcoming This Week</h2>
+    </div>
+    <div class="row g-2 g-md-4">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80" />
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Global Founders Summit</h3>
+          </a>
+          <div class="card-info">DEC 10 • Bangalore</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">Free</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&q=80" />
+            <div class="card-label">Music</div>
+            <div class="card-badge badge-purple">FESTIVAL</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Sunburn Festival 2026</h3>
+          </a>
+          <div class="card-info">DEC 15 • Pune</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹1,500</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80" />
+            <div class="card-label">Movies</div>
+            <div class="card-badge badge-pink">IMAX</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Avengers: Secret Wars</h3>
+          </a>
+          <div class="card-info">DEC 20 • Delhi</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹400</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="400">
+        <div class="event-card">
+          <a href="details-1.html" class="card-img-wrap">
+            <img alt="Event" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80" />
+            <div class="card-label">Music</div>
+            <div class="card-badge badge-red">TRENDING</div>
+          </a>
+          <a href="details-1.html" class="card-title-link">
+            <h3 class="card-title">Dil Dosti Dance 2.0</h3>
+          </a>
+          <div class="card-info">AUG 2 • Surat</div>
+          <div class="card-footer-flex">
+            <div><div class="price-label">Starts From</div><div class="price-value">₹350</div></div>
+            <a class="btn-arrow" href="details-1.html"><i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="py-4 text-center border-top" style="border-color: rgba(27,18,48,0.08) !important;">
+  <p class="text-muted small mb-0">© 2026 Netlink. Made with passion for entertainment.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+  // Initialize AOS
+  AOS.init({ duration: 800, once: true, easing: 'ease-out-quad' });
+
+  // HERO AUTO SLIDER SWIPER INIT
+  new Swiper('.heroSwiper', {
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    pagination: {
+      el: '.hero-swiper-pagination',
+      clickable: true,
+    },
+  });
+
+  // CATEGORY SWIPER SLIDER INIT
+  new Swiper('.category-swiper', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+    freeMode: true,
+    breakpoints: {
+      320: { slidesPerView: 2.8 },
+      576: { slidesPerView: 3.8 },
+      768: { slidesPerView: 4.8 },
+      992: { slidesPerView: 6 }
+    }
+  });
+
+  // SIDEBAR FUNCTIONALITY
+  const openBtn = document.getElementById('sidebarOpenBtn');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+  const drawer = document.getElementById('sidebarDrawer');
+  const overlay = document.getElementById('sidebarOverlay');
+
+  function openSidebar() {
+    drawer.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    drawer.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if(openBtn) openBtn.addEventListener('click', openSidebar);
+  if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if(overlay) overlay.addEventListener('click', closeSidebar);
+
+  // CATEGORY FILTER FUNCTIONALITY
+  const categoryCards = document.querySelectorAll('.cat-card');
+  const eventItems = document.querySelectorAll('#recommendedContainer .event-item');
+
+  categoryCards.forEach(card => {
+    card.addEventListener('click', () => {
+      categoryCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      
+      const filterCategory = card.getAttribute('data-category');
+
+      eventItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        if (filterCategory === 'all' || itemCategory === filterCategory) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Header Scroll Blur Transition
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header nav');
+    if (window.scrollY > 50) {
+      header.classList.add('py-2');
+      header.style.background = 'rgba(255, 248, 242, 0.95)';
+    } else {
+      header.classList.remove('py-2');
+      header.style.background = 'rgba(255, 248, 242, 0.85)';
+    }
+  });
+
+  // GSAP Animations
+  gsap.from('.brand-logo-text', { opacity: 0, x: -20, duration: 1, delay: 0.2 });
+  gsap.from('.search-container', { opacity: 0, y: -10, duration: 1, delay: 0.4 });
+  gsap.from('#sidebarOpenBtn', { opacity: 0, x: 20, duration: 1, delay: 0.2 });
+</script>
+</body>
+</html>
